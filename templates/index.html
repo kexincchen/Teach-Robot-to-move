@@ -1,0 +1,47 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>hello world</title>
+</head>
+<body>
+    
+    <h1> Hello Quantum Penguin! </h1>
+    <form id="user-form">
+        <label for="draft">User Input: </label>
+        <br>
+        <textarea id="draft" name="draft" rows="5" cols="50"></textarea>
+        <br>
+        <button type="submit">Generate</button>
+    </form>
+
+    <div id="output">
+        <!-- The generated output will be displayed here -->
+    </div>
+
+    <script>
+        const form = document.getElementById('user-form');
+        const outputDiv = document.getElementById('output');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const inputText = form.draft.value;
+
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    input_text: inputText
+                })
+            });
+
+            const data = await response.json();
+            outputDiv.innerHTML = `<h3>Generated Output:</h3><p>${data.output_text}</p>`;
+        });
+    </script>
+</body>
+</html>
