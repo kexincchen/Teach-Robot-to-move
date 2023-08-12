@@ -64,8 +64,8 @@ button {
 
 
 .output {
-  font-weight: bold;
   margin-top: 40px;
+  height: 250px;
 }
 
 .speech-container {
