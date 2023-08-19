@@ -20,7 +20,7 @@ def generate_output(input_text):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('robot.html')
 
 @app.route('/generate', methods=['POST'])
 def generate():
