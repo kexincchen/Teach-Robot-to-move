@@ -3,29 +3,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>hello world</title>
+    <title>JD Robot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 <body>
-    
-    <h1> Hello Quantum Penguin! </h1>
-    <h4> 👇 Click here and start speaking </h4>
-    <div class="speech-container">
-        <button id="hints">💬 Start listening</button>
+
+    <div class="top-bar">
+        <div class="top-buttons">
+            <button id = "btn1"> Log In </button>
+            <button id = "btn2"> Sign up </button>
+        </div>
     </div>
-    <form id="user-form">
-       
-        <br>
-        <textarea id="draft" type="text" class="output"></textarea>
-        <br>
-        <button type="submit">Generate</button>
-    </form>
 
-     <div id="text-output">
-        <!-- The generated output will be displayed here -->
-    </div> 
+    <div class = "flex-container">
+        <!-- Left side content (original content) -->
+        <div class = "flex-child left">
+            <h1> Teach robot to move </h1>
+            <h4> 👇 Click here and start speaking </h4>
+            <div class="speech-container">
+                <button id="hints">💬 Start listening</button>
+            </div>
+            <form id="user-form">
+               
+                <br>
+                <textarea id="draft" type="text" class="output"></textarea>
+                <br>
+                <button type="submit">Generate</button>
+            </form>
+        
+             <div id="text-output">
+                <!-- The generated output will be displayed here -->
+            </div>
+        </div>         
 
-    
+        <div class = "flex-child right">
+            <h1> Robot </h1>
+            <!-- Further need to be replaced with robot model -->
+            <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
+        </div>
+
+    </div>
 
     <script>
 
