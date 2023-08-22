@@ -22,6 +22,23 @@ def generate_output(input_text):
 def index():
     return render_template('index.html')
 
+
+@app.route('/speech-to-text', methods=['POST'])
+def stt():
+    if 'audio'not in request.files:
+        return jsonify({'error': 'audio is not inside the request.files'})
+    file = request.files['audio']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'})
+
+    file.save("uploaded_audio.mp3")
+    audiofile = open("uploaded_audio.mp3", "rb")
+    transcript = openai.Audio.translate("whisper-1", audiofile)
+    return jsonify({'message': transcript['text']})
+
+
+
+
 @app.route('/generate', methods=['POST'])
 def generate():
     try:
