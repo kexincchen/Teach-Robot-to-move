@@ -1,5 +1,5 @@
 import openai, os
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -58,6 +58,12 @@ def generate():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route('/static/scripts/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('static/scripts', filename, mimetype='application/javascript')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

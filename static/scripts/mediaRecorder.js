@@ -9,7 +9,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           audio: true,
         },
       )
-  
+
       // Success callback
       .then(function (stream) {
         const mediaRecorder = new MediaRecorder(stream);
@@ -48,7 +48,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             document.getElementById('downloadLink').style.display = 'block';
         
             uploadAudio(audioBlob);
-        };
+        }; 
         
         
       })
