@@ -25,16 +25,21 @@ def index():
 
 @app.route('/speech-to-text', methods=['POST'])
 def stt():
-    if 'audio'not in request.files:
-        return jsonify({'error': 'audio is not inside the request.files'})
-    file = request.files['audio']
+    print('[backend] speech-to-text')
+    if 'file' not in request.files:
+        print('[backend] audio not in request.files')
+        print(request.files['file'])
+        return jsonify({'error': 'No file inside the request'})
+    file = request.files['file']
     if file.filename == '':
+        print('[backend] No selected file')
         return jsonify({'error': 'No selected file'})
 
     file.save("uploaded_audio.mp3")
     audiofile = open("uploaded_audio.mp3", "rb")
     transcript = openai.Audio.translate("whisper-1", audiofile)
-    return jsonify({'message': transcript['text']})
+    print(transcript['text'])
+    return jsonify({'textOutput': transcript['text']})
 
 
 

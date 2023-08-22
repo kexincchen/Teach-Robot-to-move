@@ -32,14 +32,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         document.getElementById('stop').onclick = () => {
             mediaRecorder.stop();
             console.log(mediaRecorder.state);
-            console.log("recorder stopped");
+            console.log("[stop button] recorder stopped");
         
             document.getElementById('hints').disabled = false;
             document.getElementById('stop').disabled = true;
         };
 
         mediaRecorder.onstop = () => {
-            console.log("recorder stopped");
+            console.log("[mediaRecorder] recorder stopped");
             let audioBlob = new Blob(chunks, { type: "audio/wav"});
             chunks = [];
             //Create a URL from Blob to download
@@ -67,14 +67,17 @@ function uploadAudio(blob) {
     const formData = new FormData();
     formData.append('file', blob, 'recording.wav');
 
-    fetch('/upload', {
+    fetch('/speech-to-text', {
         method: 'POST',
         body: formData
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+      console.log(data.textOutput);
+        if (data.textOutput) {
             document.getElementById('status').textContent = "Audio uploaded successfully!";
+            var diagnostic = document.querySelector('.output');
+            diagnostic.value =  data.textOutput;
         } else {
             document.getElementById('status').textContent = "Error uploading audio.";
         }
