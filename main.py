@@ -1,7 +1,13 @@
-import openai, os
-from flask import Flask, request, jsonify, render_template, send_from_directory
+import openai
+import os
+import config
+from flask import Flask, request, jsonify, render_template
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+app.config.from_object(config)
+mongo = PyMongo(app)
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_output(input_text):
@@ -42,6 +48,15 @@ def stt():
     return jsonify({'textOutput': transcript['text']})
 
 
+@app.route('/command', methods=['POST'])
+def command():
+    command_name = request.form['Command']
+    robot_command = mongo.db.Command.find_one({'name': command_name})
+    print(robot_command['command'])
+    if robot_command is None:
+        return jsonify({'robot_command': 'report_not_exist'})
+    else:
+        return jsonify({'robot_command': robot_command['command']})
 
 
 @app.route('/generate', methods=['POST'])
@@ -60,10 +75,7 @@ def generate():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/static/scripts/<path:filename>')
-def serve_js(filename):
-    return send_from_directory('static/scripts', filename, mimetype='application/javascript')
-
-
 if __name__ == '__main__':
     app.run(debug=True)
+
+
