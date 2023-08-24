@@ -1,20 +1,14 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Flaskr</title>
+<title> JD Robot</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-<nav>
-
-  <ul>
-
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
-
+<nav class="top-bar">
+  <ul class="top-buttons">
+      <li id="btn1"><a href="{{ url_for('auth.login') }}">Log In</a></li>
   </ul>
 </nav>
 <section class="content">
   <header>
     {% block header %}{% endblock %}
   </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
   {% block content %}{% endblock %}
 </section>
