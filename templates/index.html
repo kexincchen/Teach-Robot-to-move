@@ -1,68 +1,55 @@
 <!-- index.html -->
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>JD Robot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-</head>
+{% extends 'base.html' %}
 
-<body>
 
-    <div class="top-bar">
-        <div class="top-buttons">
-            <button id = "btn1"> Log In </button>
-            <button id = "btn2"> Sign up </button>
-        </div>
-    </div>
 
-    <div class = "flex-container">
-        <!-- Left side content (original content) -->
-        <div class = "flex-child left">
-            <h1> Teach robot to move </h1>
-            <h4> 👇 Click here and start speaking </h4>
-            <div class="speech-container">
-                <button id="hints">💬 Start listening</button>
-                <button id="stop">🛑 Stop listening</button>
-            </div>
-
-            <p id="status"></p>
-            <a id="downloadLink" style="display: none;" download>downloadAudio</a>
-
-            <form id="user-form">
-               
-                <br>
-                <textarea id="draft" type="text" class="output"></textarea>
-                <br>
-                <button type="submit">Generate</button>
-            </form>
-        
-             <div id="text-output">
-                <!-- The generated output will be displayed here -->
-            </div>
-        </div>         
-
-        <div class = "flex-child right">
-            <h1> Robot </h1>
-            <!-- Further need to be replaced with robot model -->
-            <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
-            <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
+{% block content %}
+<div class = "flex-container">
+    <!-- Left side content (original content) -->
+    <div class = "flex-child left">
+        <h1> Teach robot to move </h1>
+        <h4> 👇 Click here and start speaking </h4>
+        <div class="speech-container">
+            <button id="hints">💬 Start listening</button>
+            <button id="stop">🛑 Stop listening</button>
         </div>
 
-    </div>
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+        <p id="status"></p>
+        <a id="downloadLink" style="display: none;" download>downloadAudio</a>
 
-		<script type="importmap">
-			{
-				"imports": {
-                    "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
-                    "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/"
-                  }
-			}
-		</script>
+        <form id="user-form">
+            
+            <br>
+            <textarea id="draft" type="text" class="output"></textarea>
+            <br>
+            <button type="submit">Generate</button>
+        </form>
     
-    <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>>-->
-    <script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>
+            <div id="text-output">
+            <!-- The generated output will be displayed here -->
+        </div>
+    </div>         
 
-</body>
-</html>
+    <div class = "flex-child right">
+        <h1> Robot </h1>
+        <!-- Further need to be replaced with robot model -->
+        <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
+        <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
+    </div>
+
+</div>
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/"
+                }
+        }
+    </script>
+
+<!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>>-->
+<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>
+{% endblock %}

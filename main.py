@@ -6,6 +6,9 @@ from blueprints.auth import bp as auth_bp
 from flask import Flask, request, jsonify, render_template, session, g
 from flask_pymongo import PyMongo
 
+import auth
+
+
 app = Flask(__name__)
 app.config.from_object(config)
 mongo.init_app(app)
@@ -30,6 +33,7 @@ def generate_output(input_text):
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/speech-to-text', methods=['POST'])
 def stt():
