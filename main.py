@@ -1,13 +1,16 @@
 import openai
 import os
 import config
-from flask import Flask, request, jsonify, render_template
+from exts import mongo
+from blueprints.auth import bp as auth_bp
+from flask import Flask, request, jsonify, render_template, session, g
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 app.config.from_object(config)
-mongo = PyMongo(app)
+mongo.init_app(app)
 
+app.register_blueprint(auth_bp)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def generate_output(input_text):
@@ -27,7 +30,6 @@ def generate_output(input_text):
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/speech-to-text', methods=['POST'])
 def stt():
@@ -73,6 +75,20 @@ def generate():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.before_request
+def before_request():
+    user_id = session.get("user_id")
+    if user_id:
+        user = mongo.db.User.find_one({"_id":user_id})
+        setattr(g, "user", user)
+    else:
+        setattr(g, "user", None)
+
+@app.context_processor
+def user_context_processor():
+    return {"user": g.user}
 
 
 if __name__ == '__main__':
