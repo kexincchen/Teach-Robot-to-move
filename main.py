@@ -4,10 +4,7 @@ import config
 from exts import mongo
 from blueprints.auth import bp as auth_bp
 from flask import Flask, request, jsonify, render_template, session, g
-from flask_pymongo import PyMongo
-
-import auth
-
+from bson import ObjectId
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -85,7 +82,8 @@ def generate():
 def before_request():
     user_id = session.get("user_id")
     if user_id:
-        user = mongo.db.User.find_one({"_id":user_id})
+        user = mongo.db.User.find_one({"_id": ObjectId(user_id)})
+        print(user['username'])
         setattr(g, "user", user)
     else:
         setattr(g, "user", None)
