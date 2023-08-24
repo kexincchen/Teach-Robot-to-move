@@ -1,12 +1,17 @@
 import openai
 import os
-import config
+# import config
 from flask import Flask, request, jsonify, render_template
 from flask_pymongo import PyMongo
 
+import auth
+
+
 app = Flask(__name__)
-app.config.from_object(config)
-mongo = PyMongo(app)
+app.register_blueprint(auth.bp)
+app.add_url_rule("/", endpoint="index")
+# app.config.from_object(config)
+# mongo = PyMongo(app)
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -26,7 +31,7 @@ def generate_output(input_text):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('base.html')
 
 
 @app.route('/speech-to-text', methods=['POST'])
@@ -48,15 +53,15 @@ def stt():
     return jsonify({'textOutput': transcript['text']})
 
 
-@app.route('/command', methods=['POST'])
-def command():
-    command_name = request.form['Command']
-    robot_command = mongo.db.Command.find_one({'name': command_name})
-    print(robot_command['command'])
-    if robot_command is None:
-        return jsonify({'robot_command': 'report_not_exist'})
-    else:
-        return jsonify({'robot_command': robot_command['command']})
+# @app.route('/command', methods=['POST'])
+# def command():
+#     command_name = request.form['Command']
+#     robot_command = mongo.db.Command.find_one({'name': command_name})
+#     print(robot_command['command'])
+#     if robot_command is None:
+#         return jsonify({'robot_command': 'report_not_exist'})
+#     else:
+#         return jsonify({'robot_command': robot_command['command']})
 
 
 @app.route('/generate', methods=['POST'])
