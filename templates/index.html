@@ -18,7 +18,7 @@
 
     <div class = "flex-container">
         <!-- Left side content (original content) -->
-        <div class = "flex-child left">
+        <div class = "flex-child">
             <h1> Teach robot to move </h1>
             <h4> 👇 Click here and start speaking </h4>
             <div class="speech-container">
@@ -40,30 +40,33 @@
              <div id="text-output">
                 <!-- The generated output will be displayed here -->
             </div>
-        </div>         
+        </div>
 
-        <div class = "flex-child right">
+        <div class = "flex-child">
             <h1> Robot </h1>
             <!-- Further need to be replaced with robot model -->
             <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
-
         </div>
 
     </div>
-    <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
-    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
 
-		<script type="importmap">
-			{
-				"imports": {
-                    "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
-                    "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/"
-                  }
-			}
-		</script>
-    
-    <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>>-->
-    <script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>
+
+    <div class = "robot">
+        <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
+        <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+            <script type="importmap">
+                {
+                    "imports": {
+                        "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
+                        "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/"
+                    }
+                }
+            </script>
+        
+        <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>>-->
+        <script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>
+    </div>
 
 </body>
 </html>
