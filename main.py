@@ -1,10 +1,12 @@
 import openai
 import os
 import config
+import time
 from exts import mongo
 from blueprints.auth import bp as auth_bp
-from flask import Flask, request, jsonify, render_template, session, g
+from flask import Flask, request, jsonify, render_template, session, g, send_from_directory
 from bson import ObjectId
+
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -12,6 +14,7 @@ mongo.init_app(app)
 
 app.register_blueprint(auth_bp)
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
 
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
@@ -26,6 +29,7 @@ def generate_output(input_text):
     )
     print(response.choices[0].message["content"])
     return response.choices[0].message["content"]
+
 
 @app.route('/')
 def index():
@@ -44,11 +48,15 @@ def stt():
         print('[backend] No selected file')
         return jsonify({'error': 'No selected file'})
 
+    start_time = time.time()
     file.save("uploaded_audio.mp3")
     audiofile = open("uploaded_audio.mp3", "rb")
     transcript = openai.Audio.translate("whisper-1", audiofile)
     print(transcript['text'])
-    return jsonify({'textOutput': transcript['text']})
+    end_time = time.time()
+    stt_time = round(end_time-start_time, 2)
+    print("time is " + str(stt_time))
+    return jsonify({'textOutput': transcript['text'], 'time': stt_time})
 
 
 @app.route('/command', methods=['POST'])
@@ -78,6 +86,11 @@ def generate():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/static/scripts/<path:filename>')
+def serve_js(filename):
+    return send_from_directory('static/scripts', filename, mimetype='application/javascript')
+
+
 @app.before_request
 def before_request():
     user_id = session.get("user_id")
@@ -88,12 +101,13 @@ def before_request():
     else:
         setattr(g, "user", None)
 
+
 @app.context_processor
 def user_context_processor():
     return {"user": g.user}
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
