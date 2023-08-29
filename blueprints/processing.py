@@ -6,7 +6,6 @@ from exts import mongo
 bp = Blueprint("processing",__name__, url_prefix='/processing')
 
 
-
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
     response = openai.ChatCompletion.create(
@@ -20,6 +19,8 @@ def generate_output(input_text):
     )
     print(response.choices[0].message["content"])
     return response.choices[0].message["content"]
+
+
 @bp.route('/speech-to-text', methods=['POST'])
 def stt():
     print('[backend] speech-to-text')

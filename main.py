@@ -13,20 +13,16 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(config)
-mongo.init_app(app)
+# mongo.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(processing_bp)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 
 @app.route('/static/scripts/<path:filename>')
@@ -51,6 +47,6 @@ def user_context_processor():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
 
 

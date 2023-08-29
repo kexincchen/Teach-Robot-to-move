@@ -9,6 +9,11 @@
     <!-- Left side content (original content) -->
     <div class = "flex-child left">
         <h1> Teach robot to move </h1>
+        <h4>  Choose the STT model</h4>
+        <select class="select-model" id="modelSelect" onchange="switchScript()">
+            <option value="whisper"> Whisper </option>
+            <option value="nativejs"> Native JS </option>
+        </select>
         <h4> 👇 Click here and start speaking </h4>
         <div class="speech-container">
             <button id="hints">💬 Start listening</button>
@@ -50,6 +55,7 @@
         }
     </script>
 
-<!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>>-->
-<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>
+<script src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>
+<!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>-->
+<!--<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>-->
 {% endblock %}
