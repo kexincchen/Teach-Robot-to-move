@@ -11,12 +11,12 @@
         <h1> Teach robot to move </h1>
         <h4>  Choose the STT model</h4>
         <select class="select-model" id="modelSelect" onchange="switchScript()">
-            <option value="whisper"> Whisper </option>
             <option value="nativejs"> Native JS </option>
+            <option value="whisper"> Whisper </option>
         </select>
         <h4> 👇 Click here and start speaking </h4>
         <div class="speech-container">
-            <button id="hints">💬 Start listening</button>
+            <button id="start-recording">💬 Start listening</button>
             <button id="stop">🛑 Stop listening</button>
         </div>
 
@@ -55,7 +55,8 @@
         }
     </script>
 
-<script src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>
+<!--<script src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>-->
+<script src="{{ url_for('static', filename='scripts/main.js')}}"></script>
 <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>-->
 <!--<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>-->
 {% endblock %}
