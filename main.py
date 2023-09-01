@@ -42,8 +42,6 @@ def stt():
     return jsonify({'textOutput': transcript['text']})
 
 
-
-
 @app.route('/generate', methods=['POST'])
 def generate():
     try:
