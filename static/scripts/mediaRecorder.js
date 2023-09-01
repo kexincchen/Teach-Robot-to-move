@@ -67,7 +67,7 @@ function uploadAudio(blob) {
     const formData = new FormData();
     formData.append('file', blob, 'recording.wav');
 
-    fetch('/speech-to-text', {
+    fetch('/processing/speech-to-text', {
         method: 'POST',
         body: formData
     })

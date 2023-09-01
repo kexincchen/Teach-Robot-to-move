@@ -58,7 +58,7 @@ function init() {
         model = gltf.scene;
         scene.add( model );
 
-        createGUI( model, gltf.animations );
+        // createGUI( model, gltf.animations );
 
     }, undefined, function ( e ) {
 
