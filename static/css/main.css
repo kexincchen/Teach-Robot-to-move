@@ -1,4 +1,7 @@
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0;
     padding: 0;
     font-family: system-ui;
@@ -65,24 +68,25 @@ button {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 button:hover {
   background-color: #9c6fef;
 }
 
 .flex-container {
   display: flex;  /* Use flexbox to align children side by side */
-  width: 80%;   /* Set the width of the container */
-  height: 80vh;  
+  flex-direction: row;
+  justify-content: space-around; /* Use flexbox to distribute space around children */
+  width: 90%;   /* Set the width of the container */
+  height: 80vh;
+
+
 }
 
 .flex-child{
-  flex: 1;
   border: 1px solid rgb(224, 166, 237); /* Show the flex reigon(test) */
   text-align: center;
-}
-
-.flex-child:first-child{
-  margin-right: 20px;
+  width: 500px;
 }
 
 .output {
@@ -118,4 +122,17 @@ button:hover {
     display: flex;
     gap: 10px;
     padding: 10px 15px;
+}
+
+
+@media screen and (max-width: 992px) {
+  .flex-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;   /* Set the width of the container */
+    height: 120vh;
+  }
+
 }
