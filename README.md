@@ -7,7 +7,7 @@ This project focuses on harnessing the power of Speech-to-Text (STT) technology 
 ### Local Environment
 1. Download the `python` if there does not already exist
 2. `cd COMP30022-IT-Project`
-3. `pip install requirements.txt` (or `pip3 install requirements.txt`)
+3. `pip install -r requirements.txt` (or `pip3 install -r requirements.txt`)
 
 ### Database Configuration
 1. Go to the MongoDB website and sign in with your account
@@ -16,7 +16,7 @@ This project focuses on harnessing the power of Speech-to-Text (STT) technology 
 4. Add a new data item to the collection. Here is an example: 
 ```json
 {"username": "admin", 
- "password": 1234567}
+ "password": "1234567"}
 ```
 Make sure that the length of username is smaller than 20, and the length of password is greater than 6 and less than 20.
 
@@ -24,7 +24,7 @@ Make sure that the length of username is smaller than 20, and the length of pass
 ## How to run?
 
 ### Run without database (a basic web without admin authentication)
-Simply run by typing `python main.py` in the command line
+Simply run by typing `python main.py` in the command line (or `python3 main.py`)
 
 ### Run with database 
 1. Create a new file named `config.py` and fill it with your database configuration
@@ -38,5 +38,5 @@ MONGO_DBNAME = "Robot"
 
 SECRET_KEY = "<Your secret key>"  # optional
 ```
-2. Start running: `python main.py` 
+2. Start running: `python main.py` (or `python3 main.py`)
 
