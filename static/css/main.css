@@ -136,3 +136,13 @@ button:hover {
   }
 
 }
+
+.flash {
+  margin: 1em 0px;
+  padding: 1em;
+  background: rgb(202, 230, 246);
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(55, 123, 168);
+  border-image: initial;
+}

@@ -13,7 +13,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(config)
-mongo.init_app(app)
+# mongo.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(processing_bp)
