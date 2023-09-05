@@ -111,12 +111,12 @@ function initMediaRecorder() {
             let chunks = [];
 
             // Start recording
-            document.getElementById('hints').onclick = function() {
-                if (selectedModel === 'nativejs') {
+            document.getElementById('start-recording').onclick = () =>  {
+                if (selectedModel === 'whisper') {
                     mediaRecorder.start();
                     console.log(mediaRecorder.state);
                     console.log("recorder started");
-                    document.getElementById('hints').disabled = true;
+                    document.getElementById('start-recording').disabled = true;
                     document.getElementById('stop').disabled = false;
                 }
             };
@@ -127,19 +127,19 @@ function initMediaRecorder() {
             };
 
             // Stop recording
-            document.getElementById('stop').onclick = function() {
-                if (selectedModel === 'nativejs') {
+            document.getElementById('stop').onclick = () =>{
+                if (selectedModel === 'whisper') {
                     mediaRecorder.stop();
                     console.log(mediaRecorder.state);
                     console.log("recorder stopped");
-                    document.getElementById('hints').disabled = false;
+                    document.getElementById('start-recording').disabled = false;
                     document.getElementById('stop').disabled = true;
                 }
             };
 
             // On stop
             mediaRecorder.onstop = function() {
-                console.log("recorder stopped");
+                console.log("Whisper recorder stopped");
                 const audioBlob = new Blob(chunks, { type: "audio/wav" });
                 chunks = [];
                 const audioUrl = URL.createObjectURL(audioBlob);
@@ -158,4 +158,30 @@ function initMediaRecorder() {
         console.log("getUserMedia not supported on your browser!");
         return null;
     }
+}
+
+
+function uploadAudio(blob) {
+    const formData = new FormData();
+    formData.append('file', blob, 'recording.wav');
+
+    fetch('/processing/speech-to-text', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.textOutput);
+        if (data.textOutput) {
+            document.getElementById('status').textContent = "Audio uploaded successfully!";
+            var diagnostic = document.querySelector('.output');
+            diagnostic.value =  data.textOutput;
+        } else {
+            document.getElementById('status').textContent = "Error uploading audio.";
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('status').textContent = "Error uploading audio.";
+    });
 }
