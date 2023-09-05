@@ -62,7 +62,7 @@ function handleRecognitionError(event, diagnostic) {
 async function handleFormSubmit(form, outputDiv) {
     const inputText = form.draft.value;
 
-    const response = await fetch('/generate', {
+    const response = await fetch('/processing/generate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

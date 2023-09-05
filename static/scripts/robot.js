@@ -30,11 +30,11 @@ function init() {
 
     // lights
 
-    const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x8d8d8d, 3 );
+    const hemiLight = new THREE.HemisphereLight( 0xffffff, 0x8d8d8d, 2 );
     hemiLight.position.set( 0, 20, 0 );
     scene.add( hemiLight );
 
-    const dirLight = new THREE.DirectionalLight( 0xffffff, 3 );
+    const dirLight = new THREE.DirectionalLight( 0xffffff, 1.8 );
     dirLight.position.set( 0, 20, 10 );
     scene.add( dirLight );
 
@@ -90,30 +90,8 @@ function createGUI(model, animations) {
         createStatesGUI(); // Re-initialize states GUI after adding new animations.
     });
 
-    function createStatesGUI() {
-        for (var i = 0; i < gui.folders.length; i++) {
-            console.log(gui.folders[i]._title);
-            if (gui.folders[i]._title == "States") {
-                gui.remove(gui.folders[i]);
-            }
-        }
-
-        const statesFolder = gui.addFolder('States');
-        const clipCtrl = statesFolder.add(api, 'state').options(Object.keys(actions));
-        
-        clipCtrl.onChange(function() {
-            fadeToAction(api.state, 0.5);
-        });
-
-        statesFolder.open();
-    }
-
     createStatesGUI();
-
-    function restoreState() {
-        mixer.removeEventListener('finished', restoreState);
-        fadeToAction(api.state, 0.2);
-    }
+    mixer.addEventListener( 'finished', restoreState );
 
     face = model.getObjectByName('Head_4');
     const expressions = Object.keys(face.morphTargetDictionary);
@@ -159,7 +137,6 @@ function onWindowResize() {
 
 }
 
-//
 
 function animate() {
 
@@ -173,6 +150,30 @@ function animate() {
 
     stats.update();
 
+}
+
+function createStatesGUI() {
+    for (var i = 0; i < gui.folders.length; i++) {
+        console.log(gui.folders[i]._title);
+        if (gui.folders[i]._title == "States") {
+            gui.folders[i].hide();
+        }
+    }
+
+    const statesFolder = gui.addFolder('States');
+    const clipCtrl = statesFolder.add(api, 'state').options(Object.keys(actions));
+    
+    clipCtrl.onChange(function() {
+        fadeToAction(api.state, 0.5);
+        // mixer.addEventListener( 'finished', restoreState );
+    });
+
+    statesFolder.open();
+}
+
+function restoreState() {
+    mixer.removeEventListener('finished', restoreState);
+    fadeToAction(api.state, 0.2);
 }
 
 function getNewAnimations(modelURL, callback) {
@@ -196,8 +197,6 @@ function getNewAnimations(modelURL, callback) {
 
 
 function addNewAnimations(mixer, animations) {
-
-
     // Combine animations from the current model and the other model
     // const combinedAnimations = animations.concat(otherModelAnimations);
 
@@ -209,9 +208,11 @@ function addNewAnimations(mixer, animations) {
 
         // Uncomment and modify as necessary for special loop or play conditions
         // if (emotes.indexOf(clip.name) >= 0 || states.indexOf(clip.name) >= 4) {
-        //     action.clampWhenFinished = true;
-        //     action.loop = THREE.LoopOnce;
+        // action.clampWhenFinished = true;
+        action.loop = THREE.LoopOnce;
         // }
     }
 }
 
+GUI.prototype.hide = function() { this.domElement.style.display = 'none' }
+GUI.prototype.show = function() { this.domElement.style.display = '' }
