@@ -18,19 +18,20 @@
     <!-- Left side content (original content) -->
     <div class = "flex-child">
         <h1> Teach robot to move </h1>
-        <h4>  Choose the STT model</h4>
-        <select class="select-model" id="modelSelect">
+        <h5>  Choose the STT model</h5>
+        <select class="form-select" id="modelSelect">
             <option value="nativejs"> Native JS </option>
             <option value="whisper"> Whisper </option>
         </select>
-        <h4> 👇 Click here and start speaking </h4>
+        <br></br>
+        <h5> 👇 Click here and start speaking </h5>
         <div class="speech-container">
-            <button id="start-recording">💬 Start listening</button>
-            <button id="stop">🛑 Stop listening</button>
+            <button id="start-recording" type="button" >💬 Start listening</button>
+            <button id="stop" type="button" style="display:none;">🛑 Stop listening</button>
         </div>
 
-        <p id="status"></p>
-        <a id="downloadLink" style="display: none;" download>downloadAudio</a>
+        <!--<p id="status"></p>
+        <a id="downloadLink" style="display: none;" download>downloadAudio</a>-->
 
         <form id="user-form">
             
@@ -45,12 +46,13 @@
         </div>
     </div>         
 
+    <!--
     <div class = "flex-child">
         <h1> Robot </h1>
-        <!-- Further need to be replaced with robot model -->
         <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
-        <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
     </div>
+    -->
+    <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
 
 </div>
 

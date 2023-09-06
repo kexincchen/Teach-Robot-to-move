@@ -87,12 +87,18 @@ const outputDiv = document.getElementById('text-output');
 // Set up event listeners
 start.addEventListener("click", () => {
     console.log("Start clicking...");
+    stopBtn.style.display = "inline";
+    start.style.display = "none";
     handleStartClick(recognition);
 });
 recognition.onresult = (event) => handleRecognitionResult(event, diagnostic);
 // recognition.onspeechend = () => recognition.stop();
 recognition.onerror = (event) => handleRecognitionError(event, diagnostic);
-stopBtn.addEventListener("click", () => recognition.stop());
+stopBtn.addEventListener("click", () => {
+    stopBtn.style.display = "none";
+    start.style.display = "inline";
+    recognition.stop();
+});
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     await handleFormSubmit(form, outputDiv);
@@ -143,8 +149,8 @@ function initMediaRecorder() {
                 const audioBlob = new Blob(chunks, { type: "audio/wav" });
                 chunks = [];
                 const audioUrl = URL.createObjectURL(audioBlob);
-                document.getElementById('downloadLink').href = audioUrl;
-                document.getElementById('downloadLink').style.display = 'block';
+                // document.getElementById('downloadLink').href = audioUrl;
+                // document.getElementById('downloadLink').style.display = 'block';
                 uploadAudio(audioBlob);
             };
 

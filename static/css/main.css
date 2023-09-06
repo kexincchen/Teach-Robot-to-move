@@ -84,13 +84,13 @@ button:hover {
 }
 
 .flex-child{
-  border: 1px solid rgb(224, 166, 237); /* Show the flex reigon(test) */
+  /* border: 1px solid rgb(224, 166, 237);  */
   text-align: center;
   width: 500px;
 }
 
 .output {
-  margin-top: 40px;
+  margin-top: 20px;
   height: 250px;
 }
 
@@ -145,4 +145,9 @@ button:hover {
   border-style: solid;
   border-color: rgb(55, 123, 168);
   border-image: initial;
+}
+
+#modelSelect {
+  width: auto;
+  display: inline;
 }
