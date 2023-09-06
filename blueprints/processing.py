@@ -46,7 +46,21 @@ def stt():
 
 @bp.route('/command', methods=['POST'])
 def command():
-    command_name = request.form['Command']
+    # Get the input text from front end via json
+    input_text = request.json['input_text']
+    # Use ChatGPT to process the text and return a command name
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",
+        temperature=0.8,
+        max_tokens=2000,
+        # TODO: modify the role of chatgpt to process the text
+        messages=[
+            {"role": "system", "content": f"Hello, world!"},
+            {"role": "user", "content": input_text}
+        ]
+    )
+    command_name = response.choices[0].message["content"]
+    # Search the command name in the mongoDB database
     robot_command = mongo.db.Command.find_one({'name': command_name})
     print(robot_command['command'])
     if robot_command is None:
