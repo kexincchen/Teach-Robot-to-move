@@ -105,6 +105,7 @@ function createGUI(model, animations) {
     activeAction.play();
 
     expressionFolder.open();
+    gui.close();
 }
 
 
@@ -209,7 +210,7 @@ function addNewAnimations(mixer, animations) {
         // Uncomment and modify as necessary for special loop or play conditions
         // if (emotes.indexOf(clip.name) >= 0 || states.indexOf(clip.name) >= 4) {
         // action.clampWhenFinished = true;
-        action.loop = THREE.LoopOnce;
+        // action.loop = THREE.LoopOnce;
         // }
     }
 }
