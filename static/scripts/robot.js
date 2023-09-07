@@ -85,10 +85,10 @@ function createGUI(model, animations) {
 
     addNewAnimations(mixer, animations);
 
-    getNewAnimations("static/models/XBot.glb", (otherModelAnimations, otherMixer) => {
-        addNewAnimations(otherMixer, otherModelAnimations);
-        createStatesGUI(); // Re-initialize states GUI after adding new animations.
-    });
+    //getNewAnimations("static/models/XBot.glb", (otherModelAnimations, otherMixer) => {
+    //    addNewAnimations(otherMixer, otherModelAnimations);
+    //    createStatesGUI(); // Re-initialize states GUI after adding new animations.
+    //});
 
     createStatesGUI();
     mixer.addEventListener( 'finished', restoreState );
