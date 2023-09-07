@@ -84,14 +84,13 @@ button:hover {
 }
 
 .flex-child{
-  border: 1px solid rgb(224, 166, 237); /* Show the flex reigon(test) */
+  /* border: 1px solid rgb(224, 166, 237);  */
   text-align: center;
   width: 500px;
 }
 
 .output {
-  margin-top: 40px;
-  height: 250px;
+  height: 100px;
 }
 
 .speech-container {
@@ -145,4 +144,27 @@ button:hover {
   border-style: solid;
   border-color: rgb(55, 123, 168);
   border-image: initial;
+}
+
+#modelSelect {
+  width: auto;
+  display: inline;
+}
+
+.retryBtn {
+  padding: 0px 5px 2px 5px;
+  margin: 5px;
+  background-color: transparent;
+  color: #9c6fef;
+}
+
+.retryBtn:hover {
+  color: #9a37cf;
+  text-shadow: #c0a6f1;
+  background-color: white;
+  /* background-color:#c0a6f17e; */
+}
+
+#output-command{
+  display: inline;
 }
