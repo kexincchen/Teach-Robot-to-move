@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from exts import mongo
 from .forms import LoginForm
 
@@ -29,6 +29,7 @@ def login():
                 return redirect("/")
             else:
                 print("wrong password")
+                flash("Invalid password")
                 return redirect(url_for("auth.login"))
         else:
             print("form is invalid")
