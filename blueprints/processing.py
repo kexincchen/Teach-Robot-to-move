@@ -95,10 +95,3 @@ def perform_command():
     else:
         return jsonify({'robot_command': robot_command['command']})
 
-@bp.route('/update-commands', methods=['POST'])
-def update_commands():
-    print('Updating commands')
-    data = request.json
-    commands = data['commands']
-    print(commands)
-    return jsonify({'status': 200})

@@ -214,8 +214,9 @@ function addNewAnimations(mixer, animations) {
         // }
     }
 
-    console.log(Object.keys(actions))
-    const response = fetch('/processing/update-commands', {
+    console.log(Object.keys(actions));
+    // post all the commands to the database
+    const response = fetch('/command_management/update_commands', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

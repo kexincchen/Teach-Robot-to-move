@@ -1,10 +1,26 @@
 import openai
 import time
-from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from exts import mongo
 
 bp = Blueprint("command_management", __name__, url_prefix="/command_management")
 
+@bp.route('/update_commands', methods=['POST'])
+def update_commands():
+    print('Updating commands')
+    data = request.json
+    for command in data['commands']:
+        print(command)
+        existing_command = mongo.db.Command.find_one({"name": command})
+        if existing_command:
+            # If a command with same name exists in db, then skip it
+            flash('Command with same name already exists')
+            continue
+        else:
+            # If a command with same name does not exist in db, insert a new one
+            result = mongo.db.Command.insert_one({"name": command})
+            # return f"Command added with id: {result.inserted_id}"
+    return jsonify({'status': 200})
 
 @bp.route('/add_command', methods=['POST'])
 def add_command():
@@ -28,3 +44,5 @@ def delete_command():
         return "Item deleted successfully"
     else:
         return "Item not found"
+    
+    
