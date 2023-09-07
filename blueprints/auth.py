@@ -28,7 +28,7 @@ def login():
                 session['user_id'] = str(user["_id"])
                 return redirect("/")
             else:
-                print("wrong password")
+                print("Invalid password")
                 flash("Invalid password")
                 return redirect(url_for("auth.login"))
         else:

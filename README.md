@@ -36,7 +36,7 @@ The template is:
 MONGO_URI ="<MongoDB-URI>/Robot"
 MONGO_DBNAME = "Robot"
 
-SECRET_KEY = "<Your secret key>"  # optional
+SECRET_KEY = "<Your secret key>"  
 ```
-2. Start running: `python main.py` (or `python3 main.py`)
+2. Start running: `python app.py` (or `python3 app.py`) (or `flask run`) 
 

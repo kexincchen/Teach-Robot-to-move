@@ -26,7 +26,6 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def index():
     return render_template('index.html')
 
-
 @app.route('/static/scripts/<path:filename>')
 def serve_js(filename):
     return send_from_directory('static/scripts', filename, mimetype='application/javascript')
