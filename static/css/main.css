@@ -164,3 +164,7 @@ button:hover {
   background-color: white;
   /* background-color:#c0a6f17e; */
 }
+
+#output-command{
+  display: inline;
+}

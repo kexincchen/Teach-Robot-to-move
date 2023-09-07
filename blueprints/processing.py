@@ -13,7 +13,17 @@ def generate_output(input_text):
         temperature=0.8,
         max_tokens=2000,
         messages=[
-            {"role": "system", "content": f"Hello, world!"},
+            {"role": "system", 
+             "content": 'You will be acting as an instruction responder. \
+                Then l will give you instructions in natural languages and \
+                your output will be one of the following keywords \
+                "Walking"\
+                "Running"\
+                “Idle”\
+                "Dance"\
+                For instructions may contain more than one action key words, \
+                list the one most possible keyword.\
+                For actions not matching any of above keywords, reply "None"'},
             {"role": "user", "content": input_text}
         ]
     )
@@ -44,19 +54,8 @@ def stt():
     return jsonify({'textOutput': transcript['text'], 'time': stt_time})
 
 
-@bp.route('/command', methods=['POST'])
-def command():
-    command_name = request.form['Command']
-    robot_command = mongo.db.Command.find_one({'name': command_name})
-    print(robot_command['command'])
-    if robot_command is None:
-        return jsonify({'robot_command': 'report_not_exist'})
-    else:
-        return jsonify({'robot_command': robot_command['command']})
-
-
-@bp.route('/generate', methods=['POST'])
-def generate():
+@bp.route('/generate-command', methods=['POST'])
+def generate_command():
     try:
         data = request.json
         input_text = data['input_text']
@@ -69,3 +68,29 @@ def generate():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@bp.route('/regenerate-command', methods=['POST'])
+def regenerate_command():
+    try:
+        data = request.json
+        input_text = data['input_text']
+
+        if not input_text:
+            return jsonify({"error": "Please provide input text, style, and platform."}), 400
+
+        output_text = generate_output(input_text)
+        return jsonify({"output_text": output_text}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+    
+@bp.route('/perform-command', methods=['POST'])
+def perform_command():
+    command_name = request.form['Command']
+    robot_command = mongo.db.Command.find_one({'name': command_name})
+    print(robot_command['command'])
+    if robot_command is None:
+        return jsonify({'robot_command': 'report_not_exist'})
+    else:
+        return jsonify({'robot_command': robot_command['command']})

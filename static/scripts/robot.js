@@ -5,10 +5,10 @@ import Stats from 'three/addons/libs/stats.module.js';
 import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-let container, stats, clock, gui, mixer, actions, activeAction, previousAction;
+export let container, stats, clock, gui, mixer, actions, activeAction, previousAction;
 let camera, scene, renderer, model, face;
 
-const api = { state: 'Walking' };
+export const api = { state: 'Walking' };
 
 init();
 animate();
@@ -109,8 +109,8 @@ function createGUI(model, animations) {
 }
 
 
-function fadeToAction( name, duration ) {
-
+export function fadeToAction( name, duration ) {
+    console.log('fadeToAction: ', name);
     previousAction = activeAction;
     activeAction = actions[ name ];
 
@@ -217,3 +217,4 @@ function addNewAnimations(mixer, animations) {
 
 GUI.prototype.hide = function() { this.domElement.style.display = 'none' }
 GUI.prototype.show = function() { this.domElement.style.display = '' }
+

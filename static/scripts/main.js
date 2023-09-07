@@ -1,3 +1,5 @@
+import { actions, fadeToAction, api } from './robot.js';
+
 // Global variables
 let selectedModel = 'nativejs';  // Default model
 
@@ -60,9 +62,11 @@ function handleRecognitionError(event, diagnostic) {
 
 // Handle form submission
 async function handleFormSubmit(form, outputDiv) {
-    const inputText = form.draft.value;
+    document.getElementById("output-block").style.display = "none";
+    document.getElementById("output-loading").style.display = "inline-block";
 
-    const response = await fetch('/processing/generate', {
+    const inputText = form.draft.value;
+    const response = await fetch('/processing/generate-command', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -73,7 +77,10 @@ async function handleFormSubmit(form, outputDiv) {
     });
 
     const data = await response.json();
-    outputDiv.innerHTML = `<h3>Generated Output:</h3><p>${data.output_text}</p>`;
+    document.getElementById("output-loading").style.display = "none";
+    document.getElementById("output-block").style.display = "inline";
+    document.getElementById("output-command").textContent = data.output_text;
+    // outputDiv.innerHTML = `<h3>Generated Output:</h3><p>${data.output_text}</p>`;
 }
 
 // Main code
@@ -179,10 +186,11 @@ function uploadAudio(blob) {
     .then(data => {
       console.log(data.textOutput);
         if (data.textOutput) {
-            document.getElementById('status').textContent = "Audio uploaded successfully!";
+            // document.getElementById('status').textContent = "Audio translated successfully!";
             var diagnostic = document.querySelector('.output');
             diagnostic.value =  data.textOutput;
         } else {
+            // console.log("Error uploading audio.");
             document.getElementById('status').textContent = "Error uploading audio.";
         }
     })
@@ -191,3 +199,16 @@ function uploadAudio(blob) {
         document.getElementById('status').textContent = "Error uploading audio.";
     });
 }
+
+// Assuming the command might be the name of the animation action, for example, "Walking"
+document.querySelector("#btn-perform-action").addEventListener("click", function() {
+    console.log("GO!")
+    const command = document.getElementById("output-command").textContent.trim();
+    
+    if (actions[command]) {
+        api.state = command; // Set the new state
+        fadeToAction(api.state, 0.5); // Call the function to change the robot's state/action
+    } else {
+        console.error("Command not recognized:", command);
+    }
+});
