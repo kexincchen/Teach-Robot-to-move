@@ -213,6 +213,19 @@ function addNewAnimations(mixer, animations) {
         // action.loop = THREE.LoopOnce;
         // }
     }
+
+    console.log(Object.keys(actions))
+    const response = fetch('/processing/update-commands', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "commands": Object.keys(actions)
+        }
+        )
+    });
+
 }
 
 GUI.prototype.hide = function() { this.domElement.style.display = 'none' }
