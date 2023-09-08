@@ -14,7 +14,7 @@ def update_commands():
         existing_command = mongo.db.Command.find_one({"name": command})
         if existing_command:
             # If a command with same name exists in db, then skip it
-            flash('Command with same name already exists')
+            print('Command already exists: ', command)
             continue
         else:
             # If a command with same name does not exist in db, insert a new one
