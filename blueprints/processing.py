@@ -8,6 +8,9 @@ bp = Blueprint("processing",__name__, url_prefix='/processing')
 
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
+    commands = list(mongo.db.Command.find())
+    command_names = [command["name"] for command in commands]
+    name_string = ",".join(command_names)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         temperature=0.8,
@@ -16,12 +19,10 @@ def generate_output(input_text):
             {"role": "system", 
              "content": 'You will be acting as an instruction responder. \
                 Then l will give you instructions in natural languages and \
-                your output will be one of the following keywords \
-                "Walking"\
-                "Running"\
-                “Idle”\
-                "Dance"\
-                For instructions may contain more than one action key words, \
+                your output will be one of the following keywords '+
+                name_string
+                +
+                'For instructions may contain more than one action key words, \
                 list the one most possible keyword.\
                 For actions not matching any of above keywords, reply "None"'},
             {"role": "user", "content": input_text}
@@ -59,7 +60,6 @@ def generate_command():
     try:
         data = request.json
         input_text = data['input_text']
-
         if not input_text:
             return jsonify({"error": "Please provide input text, style, and platform."}), 400
 
