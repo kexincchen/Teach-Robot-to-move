@@ -3,7 +3,7 @@ import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from exts import mongo
 
-bp = Blueprint("command_management", __name__, url_prefix="/command_management")
+bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 @bp.route('/update_commands', methods=['POST'])
 def update_commands():
@@ -21,6 +21,13 @@ def update_commands():
             result = mongo.db.Command.insert_one({"name": command})
             # return f"Command added with id: {result.inserted_id}"
     return jsonify({'status': 200})
+
+
+@bp.route('/all_commands', methods=['POST'])
+def all_commands():
+    # TODO: 可以往find()里面加{},{"name": 1, "JD":2}来只输出这两列
+    commands = mongo.db.Command.find()
+    return jsonify(commands)
 
 @bp.route('/add_command', methods=['POST'])
 def add_command():

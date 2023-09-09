@@ -216,7 +216,7 @@ function addNewAnimations(mixer, animations) {
 
     console.log(Object.keys(actions));
     // post all the commands to the database
-    const response = fetch('/command_management/update_commands', {
+    const response = fetch('/admin/update_commands', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
