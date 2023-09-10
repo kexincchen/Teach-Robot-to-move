@@ -3,7 +3,7 @@ import { setNativejs } from './nativeSTT.js';
 import { whisperSTT } from './whisperSTT.js';
 
 // Global variables
-let selectedModel = 'nativejs';  // Default model
+let selectedModel = document.getElementById('modelSelect').value;
 document.getElementById('modelSelect').addEventListener('change', function() {
     const model = document.getElementById('modelSelect').value;
     if (model === 'whisper') {
