@@ -2,6 +2,7 @@ import openai
 import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from exts import mongo
+from bson import json_util
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -27,7 +28,7 @@ def update_commands():
 def all_commands():
     # TODO: 可以往find()里面加{},{"name": 1, "JD":2}来只输出这两列
     commands = mongo.db.Command.find()
-    return jsonify(commands)
+    return json_util.dumps(commands)
 
 @bp.route('/add_command', methods=['POST'])
 def add_command():
@@ -52,4 +53,6 @@ def delete_command():
     else:
         return "Item not found"
     
-    
+@bp.route('/admin_page', methods=['GET'])
+def admin_page():
+    return render_template('admin/admin.html')
