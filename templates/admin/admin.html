@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block header %}
+  <h1>{% block title %}Admin Page{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<p>Only authenticated users can see this page.</p>
+<ul id="commandsList"></ul>
+<form id="addCommandForm">
+  <label for="commandName">Command Name:</label>
+  <input type="text" id="commandName" name="commandName" required>
+  <button type="submit">Add Command</button>
+</form>
+<script src="{{ url_for('static', filename='scripts/admin.js')}}"></script>
+{% endblock %}
+
+
