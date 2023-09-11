@@ -67,13 +67,13 @@
         <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
     </div>
     -->
-    <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
 
 </div>
 
 <!--<script src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>-->
 <script type="module" src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>
 <script type="module" src="{{ url_for('static', filename='scripts/main.js')}}"></script>
+<script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
 <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>-->
 <!--<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>-->
 {% endblock %}

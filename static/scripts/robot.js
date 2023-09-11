@@ -16,15 +16,17 @@ animate();
 function init() {
 
     container = document.createElement( 'div' );
-    document.body.appendChild( container );
+    container.className = 'flex-container';
+    const userPanel = document.getElementById('userPanel');
+    userPanel.appendChild( container );
 
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 100 );
     camera.position.set( - 5, 3, 10 );
     camera.lookAt( 0, 2, 0 );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xe0e0e0 );
-    scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
+    scene.background = new THREE.Color( 0xFFFFFF );
+    // scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
 
     clock = new THREE.Clock();
 
