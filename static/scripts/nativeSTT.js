@@ -38,15 +38,26 @@ export function setNativejs(){
     const diagnostic = document.querySelector('.output');
     const start = document.querySelector('#start-recording');
     const stopBtn = document.getElementById('stop');
+    const notice = document.getElementById("record-notice");
+
     console.log("Start clicking...");
     stopBtn.style.display = "inline";
     start.style.display = "none";
+    notice.style.visibility = "visible";
+
     recognition.start();
     recognition.onresult = (event) => handleRecognitionResult(event, diagnostic);
     recognition.onerror = (event) => handleRecognitionError(event, diagnostic);
+    recognition.onspeechend = function() {
+        recognition.stop();
+        stopBtn.style.display = "none";
+        start.style.display = "inline";
+        notice.style.visibility = "hidden";
+    }
     stopBtn.addEventListener("click", () => {
         stopBtn.style.display = "none";
         start.style.display = "inline";
+        notice.style.visibility = "hidden";
         recognition.stop();
     });
 }
@@ -95,9 +106,9 @@ function nativejsSTT() {
         // console.log('Confidence: ' + event.results[0][0].confidence);
     }
 
-    recognition.onspeechend = function() {
-        recognition.stop();
-    }
+    // recognition.onspeechend = function() {
+    //     recognition.stop();
+    // }
 
     // recognition.onnomatch = function(event) {
     // diagnostic.textContent = "I didn't recognise that color.";

@@ -179,7 +179,7 @@ table {
 }
 
 .jd-delete {
-  visibility:hidden;
+  visibility: hidden;
   background-color: rgba(0, 0, 0, 0);
   background-image: url('../images/delete.png');
   background-size: contain;

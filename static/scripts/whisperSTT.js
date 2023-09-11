@@ -21,11 +21,15 @@ export const whisperSTT = (function() {
   let mediaRecorder = null;
   const start = document.querySelector('#start-recording');
   const stopBtn = document.getElementById('stop');
+  const notice = document.getElementById("record-notice");
 
   function init() {
       stopBtn.style.display = "inline";
+      notice.style.visibility = "visible";
       start.style.display = "none";
+
       console.log("whisper is ready");
+
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           console.log("getUserMedia supported.");
           navigator.mediaDevices
@@ -66,6 +70,7 @@ export const whisperSTT = (function() {
           console.log("recorder stopped");
           stopBtn.style.display = "none";
           start.style.display = "inline";
+          notice.style.visibility = "hidden";
       }
   }
 
