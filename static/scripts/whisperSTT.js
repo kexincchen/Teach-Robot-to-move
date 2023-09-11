@@ -82,7 +82,7 @@ export const whisperSTT = (function() {
     const formData = new FormData();
     formData.append('file', blob, 'recording.wav');
   
-    fetch('/processing/speech-to-text', {
+    fetch('/processing/stt/whisper', {
         method: 'POST',
         body: formData
     })

@@ -1,6 +1,7 @@
 import { actions, fadeToAction, api } from './robot.js';
 import { setNativejs } from './nativeSTT.js';
 import { whisperSTT } from './whisperSTT.js';
+import { googleSTT } from './googleSTT.js';
 
 // Global variables
 let selectedModel = document.getElementById('modelSelect').value;
@@ -15,6 +16,11 @@ document.getElementById('modelSelect').addEventListener('change', function() {
         console.log("switched to nativejs");
         selectedModel = 'nativejs';
     }
+    else if (model === 'google-cloud') {
+        whisperSTT.removeListeners();
+        console.log("switched to google-cloud");
+        selectedModel = 'google-cloud';
+    }
 });
 
 // Execute the STT Model by clicking the start-recording button
@@ -26,6 +32,9 @@ document.getElementById('start-recording').addEventListener('click', function() 
     } else if (model === 'nativejs') {
         console.log("start nativejs");
         setNativejs();
+    } else if (model == "google-cloud"){
+        console.log("Change to google cloud");
+        googleSTT.init();
     }
 });
 
