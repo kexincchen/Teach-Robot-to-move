@@ -2,10 +2,12 @@ import openai
 import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
 from exts import mongo
-
+from google.cloud import speech
+import os
+from dotenv import load_dotenv
 bp = Blueprint("processing",__name__, url_prefix='/processing')
 
-
+load_dotenv()
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
     commands = list(mongo.db.Command.find())
@@ -32,7 +34,7 @@ def generate_output(input_text):
     return response.choices[0].message["content"]
 
 
-@bp.route('/speech-to-text', methods=['POST'])
+@bp.route('/stt/whisper', methods=['POST'])
 def stt():
     print('[backend] speech-to-text')
     if 'file' not in request.files:
@@ -53,6 +55,40 @@ def stt():
     stt_time = round(end_time-start_time, 2)
     print("time is " + str(stt_time))
     return jsonify({'textOutput': transcript['text'], 'time': stt_time})
+
+
+@bp.route('/stt/google-cloud', methods=['POST'])
+def google_stt():
+    print('[backend] speech-to-text')
+    if 'file' not in request.files:
+        print('[backend] audio not in request.files')
+        print(request.files['file'])
+        return jsonify({'error': 'No file inside the request'})
+    file = request.files['file']
+    if file.filename == '':
+        print('[backend] No selected file')
+        return jsonify({'error': 'No selected file'})
+    start_time = time.time()
+    file.save("uploaded_audio.mp3")
+
+    client = speech.SpeechClient()
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=16000,
+        language_code="en-US",
+        api_key=os.getenv("GOOGLE_CLOUD_API_KEY")
+    )
+    with file.open("rb") as audio_file:
+        content = audio_file.read()
+        audio = speech.RecognitionAudio(content=content)
+        response = client.recognize(config=config, audio=audio)
+
+    transcript = response.results[0].alternatives[0].transcript
+    print(transcript)
+    end_time = time.time()
+    stt_time = round(end_time - start_time, 2)
+    print("time is " + str(stt_time))
+    return jsonify({'textOutput': transcript, 'time': stt_time})
 
 
 @bp.route('/generate-command', methods=['POST'])
