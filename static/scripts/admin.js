@@ -11,6 +11,7 @@ window.onload = function() {
         data.forEach(command => {
             numberOfCommands += 1;
             let cellContainer = document.createElement('tr');
+
             let numberList = document.createElement('th');
             numberList.scope = "row";
             numberList.textContent = numberOfCommands;
@@ -24,11 +25,28 @@ window.onload = function() {
             jdCell.className += "jd-cell";
             btnItem.appendChild(jdCell);
 
+            let deleteItem = document.createElement('td');
+            let deleteButton = document.createElement('button');
+            deleteButton.className += "jd-delete";
+            deleteItem.appendChild(deleteButton);
+            deleteButton.addEventListener("click", () => {
+                deleteCommandByName(command.name)
+            });
+
+
             commandsList.appendChild(cellContainer);
             cellContainer.appendChild(numberList);
             cellContainer.appendChild(listItem);
             cellContainer.appendChild(btnItem);
+            cellContainer.appendChild(deleteItem);
 
+            cellContainer.addEventListener("mouseenter", (event) => {
+                deleteButton.style.visibility = "visible"
+            });
+
+            cellContainer.addEventListener("mouseleave", (event) => {
+                deleteButton.style.visibility = "hidden";
+            });
         });
     })
     .catch(error => {
@@ -94,6 +112,8 @@ function deleteCommandByName(commandName) {
     .catch(error => {
         console.error('Error deleting command:', error);
     });
+
+    location.reload();
 }
 
 
@@ -106,4 +126,9 @@ function performSelectedOperation() {
     } else if (selectedOperation === "delete") {
         deleteCommandByName(commandName);
     }
+}
+
+
+function submitJDCommand() {
+    
 }

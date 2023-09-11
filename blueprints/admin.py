@@ -49,7 +49,7 @@ def delete_command():
     delete_data = request.json
     result = mongo.db.Command.delete_one({"name": delete_data["name"]})
     if result.deleted_count == 1:
-        return "Item deleted successfully"
+        return "success"
     else:
         return "Item not found"
     

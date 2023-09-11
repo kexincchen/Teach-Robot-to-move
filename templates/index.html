@@ -29,6 +29,7 @@
         <div class="speech-container">
             <button id="start-recording" type="button" >💬 Start listening</button>
             <button id="stop" type="button" style="display:none;">🛑 Stop listening</button>
+            <p id="record-notice" style="visibility:hidden;" > Your voice is now being recorded... <br> Click the "Stop" button to stop </p>
         </div>
 
         <p id="status"></p>
@@ -67,13 +68,13 @@
         <img src="{{ url_for('static', filename='images/robot.png') }}" alt="robot" width="300" height="300">
     </div>
     -->
-    <script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
 
 </div>
 
 <!--<script src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>-->
 <script type="module" src="{{ url_for('static', filename='scripts/selectModel.js')}}"></script>
 <script type="module" src="{{ url_for('static', filename='scripts/main.js')}}"></script>
+<script type="module" src="{{ url_for('static', filename='scripts/robot.js') }}"></script>
 <!--<script src="{{ url_for('static', filename='scripts/speechRecognition.js')}}"></script>-->
 <!--<script src="{{ url_for('static', filename='scripts/mediaRecorder.js')}}"></script>-->
 {% endblock %}

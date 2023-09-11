@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 <p>Only authenticated users can see this page.</p>
-<table class="table table-hover">
+<table class="table table-hover table-borderless">
   <thead class="thead-light">
     <tr>
       <th scope="col">#</th>
@@ -16,7 +16,7 @@
   </tbody>
 </table>
 
-
+<!--
 <label for="operationSelect">Operation:</label>
 <select id="operationSelect">
     <option value="add">Add</option>
@@ -24,7 +24,7 @@
 </select>
 
 <label for="commandName">Command Name:</label>
-<input type="text" id="commandName" name="commandName">
+<input type="text" id="commandName" name="commandName">-->
 <button type="button" onclick="performSelectedOperation()">Submit</button>
 
 <script src="{{ url_for('static', filename='scripts/admin.js')}}"></script>
