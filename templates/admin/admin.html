@@ -4,7 +4,17 @@
 {% endblock %}
 {% block content %}
 <p>Only authenticated users can see this page.</p>
-<ul id="commandsList"></ul>
+<table class="table table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Commad Name</th>
+      <th scope="col">JD Robot Command</th>
+    </tr>
+  </thead>
+  <tbody id="commandsList">
+  </tbody>
+</table>
 
 
 <label for="operationSelect">Operation:</label>

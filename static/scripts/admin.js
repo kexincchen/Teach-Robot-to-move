@@ -1,5 +1,6 @@
 // Fetch commands from the server when the page loads
 window.onload = function() {
+    let numberOfCommands = 0;
     console.log("start admin");
     fetch('/admin/all_commands', {
         method: 'POST'
@@ -8,9 +9,26 @@ window.onload = function() {
     .then(data => {
         const commandsList = document.getElementById('commandsList');
         data.forEach(command => {
-            let listItem = document.createElement('li');
+            numberOfCommands += 1;
+            let cellContainer = document.createElement('tr');
+            let numberList = document.createElement('th');
+            numberList.scope = "row";
+            numberList.textContent = numberOfCommands;
+            
+            let listItem = document.createElement('td');
             listItem.textContent = command.name;
-            commandsList.appendChild(listItem);
+
+
+            let btnItem = document.createElement('td');
+            let jdCell = document.createElement('input');
+            jdCell.className += "jd-cell";
+            btnItem.appendChild(jdCell);
+
+            commandsList.appendChild(cellContainer);
+            cellContainer.appendChild(numberList);
+            cellContainer.appendChild(listItem);
+            cellContainer.appendChild(btnItem);
+
         });
     })
     .catch(error => {
