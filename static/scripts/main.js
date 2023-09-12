@@ -1,10 +1,12 @@
 import { actions, fadeToAction, api } from './robot.js';
 import { setNativejs } from './nativeSTT.js';
-import { whisperSTT } from './whisperSTT.js';
-import { googleSTT } from './googleSTT.js';
+// import { whisperSTT } from './whisperSTT.js';
+// import { googleSTT } from './googleSTT.js';
+import { backendModel } from './backendModel.js';
 
 // Global variables
 let selectedModel = document.getElementById('modelSelect').value;
+
 document.getElementById('modelSelect').addEventListener('change', function() {
     const model = document.getElementById('modelSelect').value;
     if (model === 'whisper') {
@@ -12,12 +14,10 @@ document.getElementById('modelSelect').addEventListener('change', function() {
         console.log("switched to whisper");
     }
     else if (model === 'nativejs') {
-        whisperSTT.removeListeners();
         console.log("switched to nativejs");
         selectedModel = 'nativejs';
     }
     else if (model === 'google-cloud') {
-        whisperSTT.removeListeners();
         console.log("switched to google-cloud");
         selectedModel = 'google-cloud';
     }
@@ -26,15 +26,12 @@ document.getElementById('modelSelect').addEventListener('change', function() {
 // Execute the STT Model by clicking the start-recording button
 document.getElementById('start-recording').addEventListener('click', function() {
     const model = selectedModel;
-    if (model === 'whisper') {
-        console.log("start whisper");
-        whisperSTT.init();
-    } else if (model === 'nativejs') {
+    if (model === 'nativejs') {
         console.log("start nativejs");
         setNativejs();
-    } else if (model == "google-cloud"){
-        console.log("Change to google cloud");
-        googleSTT.init();
+    }
+    else{
+        backendModel.startProcessing(model);
     }
 });
 
@@ -71,21 +68,6 @@ const form = document.getElementById('user-form');
 // const stopBtn = document.getElementById('stop');
 const outputDiv = document.getElementById('text-output');
 
-// Set up event listeners
-// start.addEventListener("click", () => {
-//     console.log("Start clicking...");
-//     stopBtn.style.display = "inline";
-//     start.style.display = "none";
-//     handleStartClick(recognition);
-// });
-// recognition.onresult = (event) => handleRecognitionResult(event, diagnostic);
-// // recognition.onspeechend = () => recognition.stop();
-// recognition.onerror = (event) => handleRecognitionError(event, diagnostic);
-// stopBtn.addEventListener("click", () => {
-//     stopBtn.style.display = "none";
-//     start.style.display = "inline";
-//     recognition.stop();
-// });
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
     await handleFormSubmit(form, outputDiv);
