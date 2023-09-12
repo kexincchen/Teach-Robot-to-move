@@ -20,7 +20,7 @@ app.register_blueprint(auth_bp)
 app.register_blueprint(processing_bp)
 app.register_blueprint(admin_bp)
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'sa_key.json'
 
 @app.route('/')
 def index():
