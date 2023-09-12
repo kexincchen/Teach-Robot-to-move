@@ -63,7 +63,7 @@ requests==2.31.0
     # via openai
 tqdm==4.66.1
     # via openai
-urllib3==2.0.4
+urllib3==1.26.16
     # via requests
 werkzeug==2.3.6
     # via
