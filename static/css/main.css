@@ -84,6 +84,12 @@ button:hover {
 
 }
 
+#userPanel {
+  width: 100%;        /* Ensure the content element takes up the full width of its parent */
+  padding: 0;         /* Remove any padding */
+  margin: 0;          /* Remove any margins */
+  /* ... other properties ... */
+}
 
 .flex-child{
   display: flex;
