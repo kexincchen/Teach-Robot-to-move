@@ -77,16 +77,24 @@ button:hover {
   display: flex;  /* Use flexbox to align children side by side */
   flex-direction: row;
   justify-content: space-around; /* Use flexbox to distribute space around children */
-  width: 90%;   /* Set the width of the container */
+  width: 100%;   /* Set the width of the container */
   height: 80vh;
-
+  /* border: 1px solid rgb(224, 166, 237);   */
+  margin-top: 90px;
 
 }
 
+
 .flex-child{
-  /* border: 1px solid rgb(224, 166, 237);  */
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid rgb(224, 166, 237);   */
   text-align: center;
-  width: 500px;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 10px;
 }
 
 .output {
@@ -128,10 +136,10 @@ button:hover {
   .flex-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-around;  
     align-items: center;
     width: 90%;   /* Set the width of the container */
-    height: 120vh;
+    height: 140vh;
   }
 
 }
