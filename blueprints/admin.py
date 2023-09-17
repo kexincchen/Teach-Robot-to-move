@@ -3,7 +3,7 @@ import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session, flash
 from exts import mongo
 from bson import json_util
-
+from Decorators import login_required
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 @bp.route('/update_commands', methods=['POST'])
@@ -52,7 +52,9 @@ def delete_command():
         return "success"
     else:
         return "Item not found"
-    
+
+
 @bp.route('/admin_page', methods=['GET'])
+@login_required
 def admin_page():
     return render_template('admin/admin.html')
