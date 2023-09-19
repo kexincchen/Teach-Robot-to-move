@@ -34,6 +34,6 @@ jobs:
     - name: Run tests
       run: |
         # Replace with your actual test command, e.g.:
-        flask run
+        python3 main.py
 
     # You can add additional steps, e.g., linting, building, etc.
