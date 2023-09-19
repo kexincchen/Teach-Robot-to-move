@@ -1,0 +1,39 @@
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up config.py
+      run: |
+        cat <<EOF >config.py
+        $CONFIG_CONTENT
+        EOF
+
+    - name: Set up sa_key.json
+      run: |
+        cat <<EOF >sa_key.json
+        $SA_KEY_CONTENT
+        EOF
+        
+    - name: Set up .env file
+      run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+      
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        
+
+      
+    - name: Run tests
+      run: |
+        # Replace with your actual test command, e.g.:
+        python3 main.py
+
+    # You can add additional steps, e.g., linting, building, etc.
