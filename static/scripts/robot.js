@@ -16,11 +16,14 @@ animate();
 function init() {
 
     container = document.createElement( 'div' );
-    container.className = 'flex-container';
-    const userPanel = document.getElementById('userPanel');
-    userPanel.appendChild( container );
+    container.className = 'flex-child';
+    const userPanel = document.getElementById('container_1');
+    userPanel.appendChild(container);
+    const flexChild = document.querySelector('.flex-child');
+    const width = flexChild.clientWidth
+    const height = flexChild.clientHeight
 
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 100 );
+    camera = new THREE.PerspectiveCamera( 45,width/height, 0.25, 100 );
     camera.position.set( - 5, 3, 10 );
     camera.lookAt( 0, 2, 0 );
 
@@ -69,7 +72,7 @@ function init() {
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(width,height);
     container.appendChild( renderer.domElement );
 
     window.addEventListener( 'resize', onWindowResize );
@@ -133,10 +136,10 @@ export function fadeToAction( name, duration ) {
 
 function onWindowResize() {
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = width/height;
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(width, height);
 
 }
 
