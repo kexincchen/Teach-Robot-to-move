@@ -1,0 +1,32 @@
+name: CI Workflow
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up config.py
+      run: echo "${{ secrets.CONFIG_PY_CONTENT }}" > config.py
+
+    - name: Set up sa_key.json
+      run: echo "${{ secrets.GOOGLE_SA_KEY_CONTENT }}" > sa_key.json
+
+    - name: Install dependencies
+      run: |
+        # Assuming you're using a Python project with requirements.txt
+        pip install -r requirements.txt
+        
+    - name: Set up .env file
+      run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
+      
+    - name: Run tests
+      run: |
+        # Replace with your actual test command, e.g.:
+        flask run
+
+    # You can add additional steps, e.g., linting, building, etc.
