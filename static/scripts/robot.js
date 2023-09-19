@@ -20,8 +20,8 @@ function init() {
     const userPanel = document.getElementById('container_1');
     userPanel.appendChild(container);
     const flexChild = document.querySelector('.flex-child');
-    const width = flexChild.clientWidth
-    const height = flexChild.clientHeight
+    const width = flexChild.clientWidth;
+    const height = flexChild.clientHeight;
 
     camera = new THREE.PerspectiveCamera( 45,width/height, 0.25, 100 );
     camera.position.set( - 5, 3, 10 );

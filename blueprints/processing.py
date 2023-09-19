@@ -33,7 +33,7 @@ def generate_output(input_text):
             {"role": "user", "content": input_text}
         ]
     )
-    print(response.choices[0].message["content"])
+    print("Results: " + response.choices[0].message["content"])
     return response.choices[0].message["content"]
 
 
@@ -106,6 +106,7 @@ def generate_command():
     try:
         data = request.json
         input_text = data['input_text']
+        print("Received input" + input_text)
         if not input_text:
             return jsonify({"error": "Please provide input text, style, and platform."}), 400
 
@@ -113,6 +114,7 @@ def generate_command():
         return jsonify({"output_text": output_text}), 200
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 
