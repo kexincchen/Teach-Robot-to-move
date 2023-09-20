@@ -1,6 +1,8 @@
 name: CI Workflow
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master, Frontend]
 
 jobs:
   build_and_test:
@@ -33,7 +35,8 @@ jobs:
       
     - name: Run tests
       run: |
-        # Replace with your actual test command, e.g.:
-        python3 main.py
+        pytest
+      # Replace with your actual test command, e.g.:
 
+  
     # You can add additional steps, e.g., linting, building, etc.
