@@ -2,8 +2,9 @@ name: CI Workflow
 
 on:
   push:
-    branches: [ master, Frontend]
-
+    branches: [main, Frontend]
+  pull_request:
+      branches: [main, Frontend]
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
