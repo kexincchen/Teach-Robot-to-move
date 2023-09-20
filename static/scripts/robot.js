@@ -16,15 +16,20 @@ animate();
 function init() {
 
     container = document.createElement( 'div' );
-    document.body.appendChild( container );
+    container.className = 'flex-child';
+    const userPanel = document.getElementById('container_1');
+    userPanel.appendChild(container);
+    const flexChild = document.querySelector('.flex-child');
+    const width = flexChild.clientWidth;
+    const height = flexChild.clientHeight;
 
-    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 100 );
+    camera = new THREE.PerspectiveCamera( 45,width/height, 0.25, 100 );
     camera.position.set( - 5, 3, 10 );
     camera.lookAt( 0, 2, 0 );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0xe0e0e0 );
-    scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
+    scene.background = new THREE.Color( 0xFFFFFF );
+    // scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
 
     clock = new THREE.Clock();
 
@@ -67,7 +72,7 @@ function init() {
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(width,height);
     container.appendChild( renderer.domElement );
 
     window.addEventListener( 'resize', onWindowResize );
@@ -131,10 +136,10 @@ export function fadeToAction( name, duration ) {
 
 function onWindowResize() {
 
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = width/height;
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.setSize(width, height);
 
 }
 
@@ -214,8 +219,9 @@ function addNewAnimations(mixer, animations) {
         // }
     }
 
-    console.log(Object.keys(actions))
-    const response = fetch('/processing/update-commands', {
+    console.log(Object.keys(actions));
+    // post all the commands to the database
+    const response = fetch('/admin/update_commands', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

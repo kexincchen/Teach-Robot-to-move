@@ -5,6 +5,8 @@ import time
 from exts import mongo
 from blueprints.auth import bp as auth_bp
 from blueprints.processing import bp as processing_bp
+from blueprints.admin import bp as admin_bp
+from blueprints.api import bp as api_bp
 from flask import Flask, request, jsonify, render_template, session, g, send_from_directory
 from bson import ObjectId
 from dotenv import load_dotenv
@@ -13,12 +15,14 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(config)
-# mongo.init_app(app)
+mongo.init_app(app)
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(processing_bp)
+app.register_blueprint(admin_bp)
+app.register_blueprint(api_bp)
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'sa_key.json'
 
 @app.route('/')
 def index():

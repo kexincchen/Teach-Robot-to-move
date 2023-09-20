@@ -20,6 +20,18 @@ This project focuses on harnessing the power of Speech-to-Text (STT) technology 
 ```
 Make sure that the length of username is smaller than 20, and the length of password is greater than 6 and less than 20.
 
+### Google Cloud Key json file
+1. Enter the website: https://cloud.google.com/speech-to-textLogin. 
+2. Login your google account and click "Try it free". Register your Google Cloud account.
+3. Click "Go to console" and create a Google Cloud Project 
+4. Enter the "APIs and services/Library" in the navigation menu drop-down menu in the top-left corner. Search for "Cloud Speech-to-Text API " and enable the API.
+5. Enter the "APIs and services/Credentials". Click the "Create Credential" and create a service account.
+6. Click the created account in "Service account", then enter the "KEYS" tab. Add a new json key (A json file would be downloaded).
+7. Move the json file into the project root directory. In app.py, Substitute "path/of/the/json" with your json file path.
+```angular2html
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'path/of/the/json'
+```
+
 
 ## How to run?
 
