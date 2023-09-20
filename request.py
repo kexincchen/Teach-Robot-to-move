@@ -1,16 +1,18 @@
 import requests
 
 # URL of your Flask server
-url = 'http://127.0.0.1:5000/processing/generate-command'  # replace 'your_endpoint' with the appropriate route on your Flask server
+filename = "uploaded_audio.mp3"
+url = 'http://127.0.0.1:5000/api/audio-to-command' 
 
-# Data you want to send
+# header = {'Content-Type': 'multipart/form-data'}
 data = {
-    'input_text': 'hello'
-
+    "model": "whisper" 
 }
-
-# Send POST request
-response = requests.post(url, json=data)
+# Open file in binary mode
+with open(filename, 'rb') as f:
+    files = {'file': f}
+    print(files)
+    response = requests.post(url, files=files, data=data)
 
 # Print response
 print(response.status_code)  # Should print 200 for success

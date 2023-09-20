@@ -37,6 +37,12 @@ def generate_output(input_text):
     return response.choices[0].message["content"]
 
 
+def call_whisper(filename):
+    audiofile = open(filename, "rb")
+    transcript = openai.Audio.translate("whisper-1", audiofile)
+    return transcript
+
+
 @bp.route('/stt/whisper', methods=['POST'])
 def stt():
     print('[backend] speech-to-text')
@@ -49,15 +55,34 @@ def stt():
         print('[backend] No selected file')
         return jsonify({'error': 'No selected file'})
 
-    start_time = time.time()
     file.save("uploaded_audio.mp3")
-    audiofile = open("uploaded_audio.mp3", "rb")
-    transcript = openai.Audio.translate("whisper-1", audiofile)
+    start_time = time.time()
+    transcript = call_whisper("uploaded_audio.mp3")
     print(transcript['text'])
     end_time = time.time()
     stt_time = round(end_time - start_time, 2)
     print("time is " + str(stt_time))
     return jsonify({'textOutput': transcript['text'], 'time': stt_time})
+
+def call_google(filename):
+    client = speech.SpeechClient()
+    config = speech.RecognitionConfig(
+        sample_rate_hertz=48000,
+        enable_automatic_punctuation=True,
+        language_code='en-US'
+    )
+
+    with open(filename, "rb") as audio_file:
+        content = audio_file.read()
+    audio = speech.RecognitionAudio(content=content)
+    response = client.recognize(config=config, audio=audio)
+    print(response)
+    print(len(response.results))
+    for result in response.results:
+        print("Transcript: {}".format(result.alternatives[0].transcript))
+
+    transcript = response.results[0].alternatives[0].transcript
+    return transcript
 
 
 @bp.route('/stt/google-cloud', methods=['POST'])
@@ -74,23 +99,7 @@ def google_stt():
     start_time = time.time()
     file.save("uploaded_audio.mp3")
     try:
-        client = speech.SpeechClient()
-        config = speech.RecognitionConfig(
-            sample_rate_hertz=48000,
-            enable_automatic_punctuation=True,
-            language_code='en-US'
-        )
-
-        with open("uploaded_audio.mp3", "rb") as audio_file:
-            content = audio_file.read()
-        audio = speech.RecognitionAudio(content=content)
-        response = client.recognize(config=config, audio=audio)
-        print(response)
-        print(len(response.results))
-        for result in response.results:
-            print("Transcript: {}".format(result.alternatives[0].transcript))
-
-        transcript = response.results[0].alternatives[0].transcript
+        transcript = call_google("uploaded_audio.mp3")
         print(transcript)
         end_time = time.time()
         stt_time = round(end_time - start_time, 2)
@@ -106,7 +115,7 @@ def generate_command():
     try:
         data = request.json
         input_text = data['input_text']
-        print("Received input" + input_text)
+        print("Received input: " + input_text)
         if not input_text:
             return jsonify({"error": "Please provide input text, style, and platform."}), 400
 
@@ -143,3 +152,4 @@ def perform_command():
         return jsonify({'robot_command': 'report_not_exist'})
     else:
         return jsonify({'robot_command': robot_command['command']})
+
