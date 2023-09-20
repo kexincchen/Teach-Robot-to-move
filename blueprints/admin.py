@@ -32,7 +32,7 @@ def update_commands():
     data = request.json
     try:
         for command in data['commands']:
-            print(command['name'])
+            print('Command: %s' % command)
             mongo.db.Command.update_one({'name': command['name']}, {'$set': command}, upsert=True)
         return jsonify({"message": "Data updated/inserted successfully"})
     except DuplicateKeyError as e:

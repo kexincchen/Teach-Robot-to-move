@@ -17,12 +17,14 @@ window.onload = function() {
             numberList.textContent = numberOfCommands;
             
             let listItem = document.createElement('td');
+            listItem.className += "robot-cell";
             listItem.textContent = command.name;
 
 
             let btnItem = document.createElement('td');
             let jdCell = document.createElement('input');
             jdCell.className += "jd-cell";
+            jdCell.value = command.JDCommand;
             btnItem.appendChild(jdCell);
 
             let deleteItem = document.createElement('td');
@@ -129,6 +131,27 @@ function performSelectedOperation() {
 }
 
 
-function submitJDCommand() {
-    
+function submitCommand() {
+    const commands = document.getElementsByClassName("robot-cell");
+    const jdCommands = document.getElementsByClassName("jd-cell");
+    let input = [];
+    for (let i = 0; i < commands.length; i++) {
+        input.push({name: commands[i].innerHTML, JDCommand: jdCommands[i].value});
+    }
+    console.log(input);
+    fetch('/admin/update_commands', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ commands: input })
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log('Response:', result);
+        // Optionally, you can refresh the list of commands or give some feedback to the user
+    })
+    .catch(error => {
+        console.error('Error adding command:', error);
+    });
 }
