@@ -3,30 +3,33 @@
   <h1>{% block title %}Teach Robot to Move{% endblock %}</h1>
 {% endblock %}
 {% block content %}
-<p>Only authenticated users can see this page.</p>
-<table class="table table-hover table-borderless">
-  <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Commad Name</th>
-      <th scope="col">JD Robot Command</th>
-    </tr>
-  </thead>
-  <tbody id="commandsList">
-  </tbody>
-</table>
+<div class="center">
+  <div class="alert alert-primary" role="alert">Only authenticated users can see this page.</div>
+  <table class="table table-hover table-borderless">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Commad Name</th>
+        <th scope="col">JD Robot Command</th>
+      </tr>
+    </thead>
+    <tbody id="commandsList">
+    </tbody>
+  </table>
 
-<!--
-<label for="operationSelect">Operation:</label>
-<select id="operationSelect">
-    <option value="add">Add</option>
-    <option value="delete">Delete</option>
-</select>
+  <!--
+  <label for="operationSelect">Operation:</label>
+  <select id="operationSelect">
+      <option value="add">Add</option>
+      <option value="delete">Delete</option>
+  </select>
 
-<label for="commandName">Command Name:</label>
-<input type="text" id="commandName" name="commandName">-->
-<button type="button" onclick="submitCommand()">Submit</button>
-
+  <label for="commandName">Command Name:</label>
+  <input type="text" id="commandName" name="commandName">-->
+  <div>
+    <button class="btn-submit" type="button" onclick="submitCommand()">Submit</button>
+  </div>
+</div>
 <script src="{{ url_for('static', filename='scripts/admin.js')}}"></script>
 {% endblock %}
 

@@ -12,14 +12,14 @@ bp = Blueprint("api", __name__, url_prefix='/api')
 @bp.route('/audio-to-command', methods=['POST'])
 def audio_to_command():
     filename = "uploaded_audio.mp3"
-    print(request.files)
-    print("1")
-    print(request.form)
-    print("2")
-    print(request.json)
-    print("3")
-    print(request.data)
-    print("4")
+    # print(request.files)
+    # print("1")
+    # print(request.form)
+    # print("2")
+    # print(request.json)
+    # print("3")
+    # print(request.data)
+    # print("4")
     if 'file' not in request.files:
         print('[backend] audio not in request.files')
         print(request.files['file'])
@@ -30,7 +30,7 @@ def audio_to_command():
         return jsonify({'error': 'No selected file'})
     file.save(filename)
     
-    model = request.json["model"]
+    model = request.form["model"]
     if model is None or model == "whisper":
         print("calling whisper")
         transcript = call_whisper(filename)
