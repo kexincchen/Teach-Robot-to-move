@@ -219,3 +219,7 @@ table {
 .btn-submit {
   width: -webkit-fill-available;
 }
+
+#btn-add-line {
+  background: white;
+}

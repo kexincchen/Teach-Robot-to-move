@@ -210,7 +210,7 @@ function addNewAnimations(mixer, animations) {
     const clip = animations[i].clone();
     const action = mixer.clipAction(clip);
     actions[clip.name] = action;
-    console.log("Add new action:", clip.name);
+    // console.log("Add new action:", clip.name);
 
     // Uncomment and modify as necessary for special loop or play conditions
     // if (emotes.indexOf(clip.name) >= 0 || states.indexOf(clip.name) >= 4) {
@@ -221,15 +221,15 @@ function addNewAnimations(mixer, animations) {
 
   console.log(Object.keys(actions));
   // post all the commands to the database
-  const response = fetch("/admin/update_commands", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      commands: Object.keys(actions),
-    }),
-  });
+  //   const response = fetch("/admin/update_commands", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       commands: Object.keys(actions),
+  //     }),
+  //   });
 }
 
 GUI.prototype.hide = function () {
