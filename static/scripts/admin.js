@@ -189,6 +189,7 @@ function submitCommand() {
     .then((response) => response.text())
     .then((result) => {
       console.log("Response:", result);
+      document.getElementById("alert-success").style.visibility = "visible";
       // Optionally, you can refresh the list of commands or give some feedback to the user
     })
     .catch((error) => {
