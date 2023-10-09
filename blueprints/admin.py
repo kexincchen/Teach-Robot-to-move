@@ -13,7 +13,6 @@ def initiate_web():
     print('Initiating the website database')
     data = request.json
     for command in data['commands']:
-        print(command['name'])
         existing_command = mongo.db.Command.find_one({"name": command['name']})
         if existing_command:
             # If a command with same name exists in db, then skip it

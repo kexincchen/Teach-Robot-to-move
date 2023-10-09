@@ -10,8 +10,10 @@ window.onload = function () {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       data.forEach((command) => {
         numberOfCommands += 1;
+        console.log(command);
         let cellContainer = document.createElement("tr");
 
         let numberList = document.createElement("th");
@@ -28,6 +30,12 @@ window.onload = function () {
         jdCell.value = command.JDCommand;
         btnItem.appendChild(jdCell);
 
+        let btnItem2 = document.createElement("td");
+        let jdCell2 = document.createElement("input");
+        jdCell2.className += "vb-cell";
+        jdCell2.value = command.virtualCommand;
+        btnItem2.appendChild(jdCell2);
+
         let deleteItem = document.createElement("td");
         let deleteButton = document.createElement("button");
         deleteButton.className += "jd-delete";
@@ -40,6 +48,7 @@ window.onload = function () {
         cellContainer.appendChild(numberList);
         cellContainer.appendChild(listItem);
         cellContainer.appendChild(btnItem);
+        cellContainer.appendChild(btnItem2);
         cellContainer.appendChild(deleteItem);
 
         cellContainer.addEventListener("mouseenter", (event) => {
@@ -91,6 +100,12 @@ function addNewLine() {
   listItem.className += "robot-cell";
   listItem.textContent = command;
 
+  let btnItem2 = document.createElement("td");
+  let jdCell2 = document.createElement("input");
+  jdCell2.className += "vb-cell";
+  jdCell2.value = "";
+  btnItem2.appendChild(jdCell2);
+
   let btnItem = document.createElement("td");
   let jdCell = document.createElement("input");
   jdCell.className += "jd-cell";
@@ -109,6 +124,7 @@ function addNewLine() {
   cellContainer.appendChild(numberList);
   cellContainer.appendChild(listItem);
   cellContainer.appendChild(btnItem);
+  cellContainer.appendChild(btnItem2);
   cellContainer.appendChild(deleteItem);
 
   cellContainer.addEventListener("mouseenter", (event) => {
@@ -174,9 +190,14 @@ function performSelectedOperation() {
 function submitCommand() {
   const commands = document.getElementsByClassName("robot-cell");
   const jdCommands = document.getElementsByClassName("jd-cell");
+  const robotCommands = document.getElementsByClassName("vb-cell");
   let input = [];
   for (let i = 0; i < commands.length; i++) {
-    input.push({ name: commands[i].innerHTML, JDCommand: jdCommands[i].value });
+    input.push({
+      name: commands[i].innerHTML,
+      JDCommand: jdCommands[i].value,
+      virtualCommand: robotCommands[i].value,
+    });
   }
   console.log(input);
   fetch("/admin/update_commands", {
