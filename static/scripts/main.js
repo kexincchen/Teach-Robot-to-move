@@ -1,7 +1,5 @@
 import { actions, fadeToAction, api } from "./robot.js";
 import { setNativejs } from "./nativeSTT.js";
-// import { whisperSTT } from './whisperSTT.js';
-// import { googleSTT } from './googleSTT.js';
 import { backendModel } from "./backendModel.js";
 
 // Global variables
@@ -12,15 +10,18 @@ document.getElementById("modelSelect").addEventListener("change", function () {
   const popover = document.getElementById("model-intro");
   if (model === "whisper") {
     selectedModel = "whisper";
-    popover.innerHTML = "whisper";
+    popover.innerHTML =
+      "Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web. OpenAI shows that the use of such a large and diverse dataset leads to improved robustness to accents, background noise and technical language. Moreover, it enables transcription in multiple languages, as well as translation from those languages into English. OpenAI are open-sourcing models and inference code to serve as a foundation for building useful applications and for further research on robust speech processing.";
     console.log("switched to whisper");
   } else if (model === "nativejs") {
     console.log("switched to nativejs");
-    popover.innerHTML = "nativejs";
     selectedModel = "nativejs";
+    popover.innerHTML =
+      "Speech recognition involves receiving speech through a device's microphone, which is then checked by a speech recognition service against a list of grammar (basically, the vocabulary you want to have recognized in a particular app.) When a word or phrase is successfully recognized, it is returned as a result (or list of results) as a text string, and further actions can be initiated as a result. The Web Speech API has a main controller interface for this — SpeechRecognition — plus a number of closely-related interfaces for representing grammar, results, etc.";
   } else if (model === "google-cloud") {
     console.log("switched to google-cloud");
-    popover.innerHTML = "google-cloud";
+    popover.innerHTML =
+      "Google Cloud accurately converts speech into text with an API powered by the best of Google’s AI research and technology. It provides hints to boost the transcription accuracy of rare and domain-specific words or phrases. Use classes to automatically convert spoken numbers into addresses, years, currencies, and more. ";
     selectedModel = "google-cloud";
   }
 });

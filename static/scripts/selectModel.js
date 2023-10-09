@@ -8,6 +8,5 @@ function switchScript() {
     } else if (modelSelect == "google-cloud"){
         cosnole.log("Change to google cloud");
     }
-
 }
 
