@@ -195,6 +195,11 @@ table {
   text-align: center;
 }
 
+.vb-cell {
+  border: 1px solid rgba(0,0,0,0);
+  text-align: center;
+}
+
 .jd-delete {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0);
@@ -218,4 +223,12 @@ table {
 
 .btn-submit {
   width: -webkit-fill-available;
+}
+
+#btn-add-line {
+  background: white;
+}
+
+#model-info{
+  background: white;
 }

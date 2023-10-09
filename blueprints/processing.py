@@ -14,7 +14,7 @@ load_dotenv()
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
     commands = list(mongo.db.Command.find())
-    command_names = [command["name"] for command in commands]
+    command_names = [command["virtualCommand"] for command in commands]
     name_string = ",".join(command_names)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",

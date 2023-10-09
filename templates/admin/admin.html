@@ -5,18 +5,18 @@
 {% block content %}
 <div class="center">
   <div class="alert alert-primary" role="alert">Only authenticated users can see this page.</div>
-  <table class="table table-hover table-borderless">
+  <table class="table tablae-hover table-borderless">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
         <th scope="col">Commad Name</th>
         <th scope="col">JD Robot Command</th>
+        <th scope="col">Virtual Command</th>
       </tr>
     </thead>
     <tbody id="commandsList">
     </tbody>
   </table>
-
   <!--
   <label for="operationSelect">Operation:</label>
   <select id="operationSelect">
@@ -26,8 +26,18 @@
 
   <label for="commandName">Command Name:</label>
   <input type="text" id="commandName" name="commandName">-->
-  <div>
-    <button class="btn-submit" type="button" onclick="submitCommand()">Submit</button>
+  <div >
+    <div style="display: inline-flex; width: -webkit-fill-available;">
+      <input class="form-control" id="new-input-command" required></input>
+      <button id="btn-add-line" type="button" onclick="addNewLine()">
+        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0,0,256,256">
+          <g fill="#787878" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(10.66667,10.66667)"><path d="M12,2c-5.53333,0 -10,4.46667 -10,10c0,5.53333 4.46667,10 10,10c5.53333,0 10,-4.46667 10,-10c0,-5.53333 -4.46667,-10 -10,-10zM12,4c4.46667,0 8,3.53333 8,8c0,4.46667 -3.53333,8 -8,8c-4.46667,0 -8,-3.53333 -8,-8c0,-4.46667 3.53333,-8 8,-8zM11,7v4h-4v2h4v4h2v-4h4v-2h-4v-4z"></path></g></g>
+          </svg>
+      </button>
+    </div>
+    <br>
+    <button style="margin-top: 20px; margin-bottom: 20px; height: 60px;" class="btn-submit" type="button" onclick="submitCommand()">Submit</button>
+    <div id="alert-success" style="visibility:hidden;" class="alert alert-success" role="alert">Successfully submitted!</div>
   </div>
 </div>
 <script src="{{ url_for('static', filename='scripts/admin.js')}}"></script>
