@@ -2,7 +2,7 @@ import openai
 import os
 import config
 import time
-from exts import mongo
+from exts import mongo,limiter
 from blueprints.auth import bp as auth_bp
 from blueprints.processing import bp as processing_bp
 from blueprints.admin import bp as admin_bp
@@ -11,12 +11,13 @@ from flask import Flask, request, jsonify, render_template, session, g, send_fro
 from bson import ObjectId
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(config)
 mongo.init_app(app)
-
+limiter.init_app(app)
 app.register_blueprint(auth_bp)
 app.register_blueprint(processing_bp)
 app.register_blueprint(admin_bp)

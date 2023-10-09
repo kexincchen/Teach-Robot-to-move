@@ -1,7 +1,7 @@
 import openai
 import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
-from exts import mongo
+from exts import mongo, limiter
 from google.cloud import speech
 import os
 from dotenv import load_dotenv
@@ -10,6 +10,7 @@ from .processing import generate_output, call_whisper, call_google
 bp = Blueprint("api", __name__, url_prefix='/api')
 
 @bp.route('/audio-to-command', methods=['POST'])
+@limiter.limit("5 per minute")
 def audio_to_command():
     filename = "uploaded_audio.mp3"
     # print(request.files)

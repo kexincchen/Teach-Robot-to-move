@@ -16,11 +16,11 @@ def initiate_web():
         existing_command = mongo.db.Command.find_one({"name": command['name']})
         if existing_command:
             # If a command with same name exists in db, then skip it
-            print('Command already exists: ', command['name'])
+            print('Command already exists: ', command)
             continue
         else:
             # If a command with same name does not exist in db, insert a new one
-            result = mongo.db.Command.insert_one({'$set': command})
+            result = mongo.db.Command.insert_one({'name': command, 'JDCommand': 'undefined'})
             # return f"Command added with id: {result.inserted_id}"
     return jsonify({'status': 200})
 
