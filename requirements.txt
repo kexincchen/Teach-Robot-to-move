@@ -50,8 +50,6 @@ multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
-openai==0.27.8
-    # via -r requirements.in
 tqdm==4.66.1
     # via openai
 urllib3==1.26.16
