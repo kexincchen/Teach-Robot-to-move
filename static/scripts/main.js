@@ -13,9 +13,9 @@ document.getElementById("modelSelect").addEventListener("change", function () {
     popover.innerHTML =
       "Whisper is an automatic speech recognition (ASR) system trained on 680,000 hours of multilingual and multitask supervised data collected from the web. OpenAI shows that the use of such a large and diverse dataset leads to improved robustness to accents, background noise and technical language. Moreover, it enables transcription in multiple languages, as well as translation from those languages into English. OpenAI are open-sourcing models and inference code to serve as a foundation for building useful applications and for further research on robust speech processing.";
     console.log("switched to whisper");
-  } else if (model === "nativejs") {
-    console.log("switched to nativejs");
-    selectedModel = "nativejs";
+  } else if (model === "Mozilla") {
+    console.log("switched to Mozilla");
+    selectedModel = "Mozilla";
     popover.innerHTML =
       "Speech recognition involves receiving speech through a device's microphone, which is then checked by a speech recognition service against a list of grammar (basically, the vocabulary you want to have recognized in a particular app.) When a word or phrase is successfully recognized, it is returned as a result (or list of results) as a text string, and further actions can be initiated as a result. The Web Speech API has a main controller interface for this — SpeechRecognition — plus a number of closely-related interfaces for representing grammar, results, etc.";
   } else if (model === "google-cloud") {
@@ -31,8 +31,8 @@ document
   .getElementById("start-recording")
   .addEventListener("click", function () {
     const model = selectedModel;
-    if (model === "nativejs") {
-      console.log("start nativejs");
+    if (model === "Mozilla") {
+      console.log("start Mozilla");
       setNativejs();
     } else {
       backendModel.startProcessing(model);

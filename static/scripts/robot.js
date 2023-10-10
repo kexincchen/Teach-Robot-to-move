@@ -219,19 +219,18 @@ function addNewAnimations(mixer, animations) {
     // }
   }
 
-    console.log(Object.keys(actions));
-    // post all the commands to the database
-    const response = fetch('/admin/initiate_web', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "commands": Object.keys(actions)
-        }
-        )
-    });
-
+  console.log(Object.keys(actions));
+  // post all the commands to the database
+  // const response = fetch('/admin/initiate_web', {
+  //     method: 'POST',
+  //     headers: {
+  //         'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify({
+  //         "commands": Object.keys(actions)
+  //     }
+  //     )
+  // });
 }
 
 GUI.prototype.hide = function () {
