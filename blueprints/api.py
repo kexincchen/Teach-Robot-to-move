@@ -15,8 +15,12 @@ bp = Blueprint("api", __name__, url_prefix='/api')
 def audio_to_command():
     username = request.form["username"]
     api_key = request.form["api"]
-    if not check_password_hash(api_key, mongo.db.API.find_one({'username': username})["api"]):
-        return jsonify({"error": "Invalid api key"}), 500
+    API = mongo.db.API.find_one({'username': username})
+    if API is None:
+        return jsonify({'error': 'API not exist'})
+    api_get = API["api"]
+    if not check_password_hash(api_key, api_get):
+        return jsonify({"error": "Invalid api key"})
 
     filename = "uploaded_audio.mp3"
     if 'file' not in request.files:
