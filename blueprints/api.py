@@ -38,7 +38,8 @@ def audio_to_command():
         transcript = call_google(filename)
     else:
         return jsonify({"error": "The model is not supported"}), 500
-    
-    return jsonify({"output": transcript}), 200
+    command_name = generate_output(transcript)
+    output = mongo.db.Command.find_one({"name": command_name})["JDCommand"]
+    return jsonify({"output": output}), 200
 
 
