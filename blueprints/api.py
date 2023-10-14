@@ -6,21 +6,19 @@ from google.cloud import speech
 import os
 from dotenv import load_dotenv
 from .processing import generate_output, call_whisper, call_google
+from werkzeug.security import generate_password_hash, check_password_hash
 
 bp = Blueprint("api", __name__, url_prefix='/api')
 
 @bp.route('/audio-to-command', methods=['POST'])
 @limiter.limit("5 per minute")
 def audio_to_command():
+    username = request.form["username"]
+    api_key = request.form["api"]
+    if not check_password_hash(api_key, mongo.db.API.find_one({'username': username})["api"]):
+        return jsonify({"error": "Invalid api key"}), 500
+
     filename = "uploaded_audio.mp3"
-    # print(request.files)
-    # print("1")
-    # print(request.form)
-    # print("2")
-    # print(request.json)
-    # print("3")
-    # print(request.data)
-    # print("4")
     if 'file' not in request.files:
         print('[backend] audio not in request.files')
         print(request.files['file'])
@@ -42,3 +40,5 @@ def audio_to_command():
         return jsonify({"error": "The model is not supported"}), 500
     
     return jsonify({"output": transcript}), 200
+
+

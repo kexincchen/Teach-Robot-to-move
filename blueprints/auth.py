@@ -21,15 +21,17 @@ def login():
             # search the User database to make sure there is an admin account
             # If there is no account exist in database, register one
             if len(list(mongo.db.User.find())) == 0:
-                print("Register an admin account "+ username)
+                print("Register an admin account " + username)
                 mongo.db.User.insert_one({'username': username, "password": generate_password_hash(password)})
+                # default api for admin account
+                # need algorithm to generate api key
+                mongo.db.API.insert_one({'username': username, "api": generate_password_hash("api_for_admin")})
 
             user = mongo.db.User.find_one({'username': username})
             if not user:
                 print(username + " is not exist in database")
                 return redirect(url_for("auth.login"))
 
-            # TODO: use Hash check to improve password validation
             if check_password_hash(user["password"], password):
                 print("password correct")
                 session['user_id'] = str(user["_id"])
