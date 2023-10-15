@@ -4,6 +4,7 @@ config.py
 uploaded_audio.mp3
 .DS_Store
 .idea/
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

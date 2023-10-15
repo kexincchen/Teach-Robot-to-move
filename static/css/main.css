@@ -17,6 +17,7 @@ body {
     width: 100%;
     opacity: .9;
     margin-bottom: 10px;
+    text-align: center;
   }
   
 body,
@@ -158,6 +159,8 @@ button:hover {
   border-style: solid;
   border-color: rgb(55, 123, 168);
   border-image: initial;
+  margin: auto;
+  width: 320px;
 }
 
 #modelSelect {
@@ -192,6 +195,11 @@ table {
   text-align: center;
 }
 
+.vb-cell {
+  border: 1px solid rgba(0,0,0,0);
+  text-align: center;
+}
+
 .jd-delete {
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0);
@@ -203,4 +211,24 @@ table {
 .jd-delete:hover {
   background-color: #c2c2c2a0;
   /* border: 2px solid #9c6fef; */
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  -ms-transform: translate(-50%, 0%);
+  transform: translate(-50%, 0%);
+}
+
+.btn-submit {
+  width: -webkit-fill-available;
+}
+
+#btn-add-line {
+  background: white;
+}
+
+#model-info{
+  background: white;
 }

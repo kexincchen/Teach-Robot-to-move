@@ -1,20 +1,20 @@
 import openai
 import time
 from flask import Blueprint, render_template, request, jsonify, redirect, url_for, session
+
 from exts import mongo
 from google.cloud import speech
+from exts import limiter
 import os
 from dotenv import load_dotenv
-
 bp = Blueprint("processing", __name__, url_prefix='/processing')
 
 load_dotenv()
 
-
 def generate_output(input_text):
     # Use GPT-3.5 to generate the improved output
     commands = list(mongo.db.Command.find())
-    command_names = [command["name"] for command in commands]
+    command_names = [command["virtualCommand"] for command in commands]
     name_string = ",".join(command_names)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -33,11 +33,18 @@ def generate_output(input_text):
             {"role": "user", "content": input_text}
         ]
     )
-    print(response.choices[0].message["content"])
+    print("Results: " + response.choices[0].message["content"])
     return response.choices[0].message["content"]
 
 
+def call_whisper(filename):
+    audiofile = open(filename, "rb")
+    transcript = openai.Audio.translate("whisper-1", audiofile)
+    return transcript
+
+
 @bp.route('/stt/whisper', methods=['POST'])
+@limiter.limit("5 per minute")
 def stt():
     print('[backend] speech-to-text')
     if 'file' not in request.files:
@@ -49,18 +56,38 @@ def stt():
         print('[backend] No selected file')
         return jsonify({'error': 'No selected file'})
 
-    start_time = time.time()
     file.save("uploaded_audio.mp3")
-    audiofile = open("uploaded_audio.mp3", "rb")
-    transcript = openai.Audio.translate("whisper-1", audiofile)
+    start_time = time.time()
+    transcript = call_whisper("uploaded_audio.mp3")
     print(transcript['text'])
     end_time = time.time()
     stt_time = round(end_time - start_time, 2)
     print("time is " + str(stt_time))
     return jsonify({'textOutput': transcript['text'], 'time': stt_time})
 
+def call_google(filename):
+    client = speech.SpeechClient()
+    config = speech.RecognitionConfig(
+        sample_rate_hertz=48000,
+        enable_automatic_punctuation=True,
+        language_code='en-US'
+    )
+
+    with open(filename, "rb") as audio_file:
+        content = audio_file.read()
+    audio = speech.RecognitionAudio(content=content)
+    response = client.recognize(config=config, audio=audio)
+    print(response)
+    print(len(response.results))
+    for result in response.results:
+        print("Transcript: {}".format(result.alternatives[0].transcript))
+
+    transcript = response.results[0].alternatives[0].transcript
+    return transcript
+
 
 @bp.route('/stt/google-cloud', methods=['POST'])
+@limiter.limit("5 per minute")
 def google_stt():
     print('[backend] speech-to-text')
     if 'file' not in request.files:
@@ -74,23 +101,7 @@ def google_stt():
     start_time = time.time()
     file.save("uploaded_audio.mp3")
     try:
-        client = speech.SpeechClient()
-        config = speech.RecognitionConfig(
-            sample_rate_hertz=48000,
-            enable_automatic_punctuation=True,
-            language_code='en-US'
-        )
-
-        with open("uploaded_audio.mp3", "rb") as audio_file:
-            content = audio_file.read()
-        audio = speech.RecognitionAudio(content=content)
-        response = client.recognize(config=config, audio=audio)
-        print(response)
-        print(len(response.results))
-        for result in response.results:
-            print("Transcript: {}".format(result.alternatives[0].transcript))
-
-        transcript = response.results[0].alternatives[0].transcript
+        transcript = call_google("uploaded_audio.mp3")
         print(transcript)
         end_time = time.time()
         stt_time = round(end_time - start_time, 2)
@@ -102,10 +113,12 @@ def google_stt():
 
 
 @bp.route('/generate-command', methods=['POST'])
+@limiter.limit("5 per minute")
 def generate_command():
     try:
         data = request.json
         input_text = data['input_text']
+        print("Received input: " + input_text)
         if not input_text:
             return jsonify({"error": "Please provide input text, style, and platform."}), 400
 
@@ -113,10 +126,12 @@ def generate_command():
         return jsonify({"output_text": output_text}), 200
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 
 @bp.route('/regenerate-command', methods=['POST'])
+@limiter.limit("5 per minute")
 def regenerate_command():
     try:
         data = request.json
@@ -141,3 +156,4 @@ def perform_command():
         return jsonify({'robot_command': 'report_not_exist'})
     else:
         return jsonify({'robot_command': robot_command['command']})
+

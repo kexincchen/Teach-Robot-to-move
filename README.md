@@ -32,11 +32,17 @@ Make sure that the length of username is smaller than 20, and the length of pass
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'path/of/the/json'
 ```
 
+### OpenAI API KEY
+1. Create a new file in the root named `.env`
+2. Fill in the environment
+```
+OPENAI_API_KEY = <Your OpenAI API Key>
+```
 
 ## How to run?
 
 ### Run without database (a basic web without admin authentication)
-Simply run by typing `python main.py` in the command line (or `python3 main.py`)
+Simply run by typing `flask run` in the command line (or `python3 main.py`)
 
 ### Run with database 
 1. Create a new file named `config.py` and fill it with your database configuration
@@ -50,5 +56,5 @@ MONGO_DBNAME = "Robot"
 
 SECRET_KEY = "<Your secret key>"  
 ```
-2. Start running: `python app.py` (or `python3 app.py`) (or `flask run`) 
+2. Start running: `flask run` (or `python3 app.py`)  
 

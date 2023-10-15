@@ -3,10 +3,12 @@ export const backendModel = (function(){
     let chunks = [];
     const start = document.querySelector('#start-recording');
     const stopBtn = document.getElementById('stop');
+    const notice = document.getElementById("record-notice");
 
     function startProcessing(model){
         stopBtn.style.display = "inline";
         start.style.display = "none";
+        notice.style.visibility = "visible";
         console.log("mediaRecorder is ready");
         console.log(model + " is used.");
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -48,6 +50,7 @@ export const backendModel = (function(){
             console.log("recorder stopped");
             stopBtn.style.display = "none";
             start.style.display = "inline";
+            notice.style.visibility = "hidden";
             stopBtn.removeEventListener("click", stopRecording);
         }
     }
