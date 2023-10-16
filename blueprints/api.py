@@ -6,21 +6,22 @@ from google.cloud import speech
 import os
 from dotenv import load_dotenv
 from .processing import generate_output, call_whisper, call_google
-
+from werkzeug.security import generate_password_hash, check_password_hash
 bp = Blueprint("api", __name__, url_prefix='/api')
 
 @bp.route('/audio-to-command', methods=['POST'])
 @limiter.limit("5 per minute")
 def audio_to_command():
+    username = request.form["username"]
+    api_key = request.form["api"]
+    API = mongo.db.API.find_one({'username': username})
+    if API is None:
+        return jsonify({'error': 'API not exist'})
+    api_get = API["api"]
+    if not check_password_hash(api_key, api_get):
+        return jsonify({"error": "Invalid api key"})
+
     filename = "uploaded_audio.mp3"
-    # print(request.files)
-    # print("1")
-    # print(request.form)
-    # print("2")
-    # print(request.json)
-    # print("3")
-    # print(request.data)
-    # print("4")
     if 'file' not in request.files:
         print('[backend] audio not in request.files')
         print(request.files['file'])
@@ -40,5 +41,7 @@ def audio_to_command():
         transcript = call_google(filename)
     else:
         return jsonify({"error": "The model is not supported"}), 500
-    
-    return jsonify({"output": transcript}), 200
+    command_name = generate_output(transcript)
+    output = mongo.db.Command.find_one({"name": command_name})["JDCommand"]
+    return jsonify({"output": output}), 200
+
