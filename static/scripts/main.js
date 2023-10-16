@@ -41,26 +41,39 @@ document
 
 // Handle form submission
 async function handleFormSubmit(form, outputDiv) {
-  document.getElementById("output-block").style.display = "none";
-  document.getElementById("output-loading").style.display = "inline-block";
+  try {
+      document.getElementById("output-block").style.display = "none";
+      document.getElementById("output-loading").style.display = "inline-block";
 
-  const inputText = form.draft.value;
-  const response = await fetch("/processing/generate-command", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      input_text: inputText,
-    }),
-  });
+      const inputText = form.draft.value;
+      const response = await fetch("/processing/generate-command", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+              input_text: inputText,
+          }),
+      });
 
-  const data = await response.json();
-  document.getElementById("output-loading").style.display = "none";
-  document.getElementById("output-block").style.display = "inline";
-  document.getElementById("output-command").textContent = data.output_text;
-  // outputDiv.innerHTML = `<h3>Generated Output:</h3><p>${data.output_text}</p>`;
+      // Check if the status code is 429
+      if (response.status === 429) {
+          alert('Too Many Requests: Please try again later.');
+          document.getElementById("output-loading").style.display = "none";
+          return; // Exit function early
+      }
+
+      const data = await response.json();
+      document.getElementById("output-loading").style.display = "none";
+      document.getElementById("output-block").style.display = "inline";
+      document.getElementById("output-command").textContent = data.output_text;
+      // outputDiv.innerHTML = `<h3>Generated Output:</h3><p>${data.output_text}</p>`;
+  } catch (error) {
+      console.error('Error:', error);
+      document.getElementById("output-loading").style.display = "none";
+  }
 }
+
 
 // Main code
 // const recognition = initSpeechRecognition();

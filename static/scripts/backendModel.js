@@ -58,27 +58,35 @@ export const backendModel = (function(){
     function uploadAudio(blob, model) {
         const formData = new FormData();
         formData.append('file', blob, 'recording.wav');
-        fetch(('/processing/stt/'+ model), {
+        
+        fetch(('/processing/stt/' + model), {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => {
+            // Check if the status code is 429
+            if(response.status === 429) {
+                alert('Too Many Requests: Please try again later.');
+                throw new Error('Too Many Requests'); // Throw an error so you can jump to the catch block
+            }
+            return response.json(); // If status code is not 429, continue processing
+        })
         .then(data => {
             if (data.textOutput) {
-                console.log ("Audio uploaded successfully!");
+                console.log("Audio uploaded successfully!");
                 let diagnostic = document.querySelector('.output');
-                diagnostic.value =  data.textOutput;
+                diagnostic.value = data.textOutput;
                 console.log(model + " is used.");
                 console.log(data.textOutput);
             } else {
-                console.log ( "Error uploading audio.");
-             }
+                console.log("Error uploading audio.");
+            }
         })
         .catch(error => {
             console.error('Error:', error);
-            
         });
-      }
+    }
+    
       
     return {
         startProcessing: startProcessing
