@@ -7,7 +7,6 @@ import os
 from dotenv import load_dotenv
 from .processing import generate_output, call_whisper, call_google
 from werkzeug.security import generate_password_hash, check_password_hash
-
 bp = Blueprint("api", __name__, url_prefix='/api')
 
 @bp.route('/audio-to-command', methods=['POST'])
@@ -45,5 +44,4 @@ def audio_to_command():
     command_name = generate_output(transcript)
     output = mongo.db.Command.find_one({"name": command_name})["JDCommand"]
     return jsonify({"output": output}), 200
-
 
