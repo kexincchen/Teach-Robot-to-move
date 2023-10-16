@@ -168,14 +168,14 @@ button:hover {
   display: inline;
 }
 
-.retryBtn {
+#retryBtn {
   padding: 0px 5px 2px 5px;
   margin: 5px;
   background-color: transparent;
   color: #9c6fef;
 }
 
-.retryBtn:hover {
+#retryBtn:hover {
   color: #9a37cf;
   text-shadow: #c0a6f1;
   background-color: white;

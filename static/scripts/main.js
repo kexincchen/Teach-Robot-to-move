@@ -70,8 +70,16 @@ const form = document.getElementById("user-form");
 // const stopBtn = document.getElementById('stop');
 const outputDiv = document.getElementById("text-output");
 
+const retryBtn = document.getElementById("retryBtn");
+
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  await handleFormSubmit(form, outputDiv);
+});
+
+retryBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  console.log("HandleSubmit");
   await handleFormSubmit(form, outputDiv);
 });
 

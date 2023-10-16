@@ -217,3 +217,5 @@ function submitCommand() {
       console.error("Error adding command:", error);
     });
 }
+
+
