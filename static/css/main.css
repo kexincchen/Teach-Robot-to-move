@@ -79,7 +79,7 @@ button:hover {
   flex-direction: row;
   justify-content: space-around; /* Use flexbox to distribute space around children */
   width: 100%;   /* Set the width of the container */
-  height: 80vh;
+  height: 75vh;
   /* border: 1px solid rgb(224, 166, 237);   */
   margin-top: 90px;
 
