@@ -18,7 +18,10 @@ def audio_to_command():
     if API is None:
         return jsonify({'error': 'API not exist'})
     api_get = API["api"]
-    if not check_password_hash(api_key, api_get):
+    # if not check_password_hash(api_key, api_get):
+    if not (api_get == api_key):
+        print(api_key)
+        print(api_get)
         return jsonify({"error": "Invalid api key"})
 
     filename = "uploaded_audio.mp3"
@@ -35,13 +38,18 @@ def audio_to_command():
     model = request.form["model"]
     if model is None or model == "whisper":
         print("calling whisper")
-        transcript = call_whisper(filename)
+        transcript = call_whisper(filename)["text"]
     elif model == "google":
         print("calling google")
-        transcript = call_google(filename)
+        transcript = call_google(filename)["text"]
     else:
         return jsonify({"error": "The model is not supported"}), 500
+    # print(transcript)
     command_name = generate_output(transcript)
-    output = mongo.db.Command.find_one({"name": command_name})["JDCommand"]
-    return jsonify({"output": output}), 200
+    # print(command_name)
+    try: 
+        output = mongo.db.Command.find_one({"name": command_name})["JDCommand"]
+        return jsonify({"output": output}), 200
+    except:  
+        return jsonify({"error": "No such command"})
 
