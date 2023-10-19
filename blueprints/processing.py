@@ -16,7 +16,6 @@ def generate_output(input_text):
     commands = list(mongo.db.Command.find())
     command_names = [command["virtualCommand"] for command in commands]
     name_string = ",".join(command_names)
-    print(name_string)
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         temperature=0.8,
