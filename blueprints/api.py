@@ -18,10 +18,10 @@ def audio_to_command():
     if API is None:
         return jsonify({'error': 'API not exist'})
     api_get = API["api"]
-    # if not check_password_hash(api_key, api_get):
-    if not (api_get == api_key):
-        print(api_key)
-        print(api_get)
+    if not check_password_hash(api_get, api_key):
+    # if not (api_get == api_key):
+        # print(api_key)
+        # print(api_get)
         return jsonify({"error": "Invalid api key"})
 
     filename = "uploaded_audio.mp3"

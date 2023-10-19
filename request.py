@@ -2,12 +2,12 @@ import requests
 
 # URL of your Flask server
 filename = "uploaded_audio.mp3"  # replace with your own audio file name
-url = 'http://127.0.0.1:5000/api/audio-to-command' 
+url = 'https://www.teachrobottomove.com/api/audio-to-command' 
 
 header = {'Content-Type': 'multipart/form-data'}
 data = {
     "model": "whisper",  # choose the model you want to use ("whisper" / "google")
-    "api": "api_key",
+    "api": "api_for_admin",
     "username": "admin"
 }
 # Open file in binary mode
