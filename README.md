@@ -64,8 +64,3 @@ SECRET_KEY = "<Your secret key>"
 1. Open the [request.py](https://github.com/kexincchen/COMP30022-IT-Project/blob/main/request.py)
 2. Replace the audio file with your own
 3. Run `python request.py`
-
-## How to deploy the MongoDB database?
-1. Create a new cluster
-2. Create a new database called "Robot"
-3. Add collections ("API","Command","User")  into the "Robot" database. You do not need to insert any data into the collections, but make sure the names of the three collection are correct.
