@@ -16,14 +16,8 @@ This project focuses on harnessing the power of Speech-to-Text (STT) technology 
 
 1. Go to the MongoDB website and sign in with your account
 2. Create a new cluster with the server that is close to your location (e.g. Sydney)
-3. Create a new Database named `Robot` and a new Collection named `User`
-4. Add a new data item to the collection. Here is an example:
-
-```json
-{ "username": "admin", "password": "1234567" }
-```
-
-Make sure that the length of username is smaller than 20, and the length of password is greater than 6 and less than 20.
+3. Create a new database called "Robot"
+3. Add collections ("API","Command","User")  into the "Robot" database. You do not need to insert any data into the collections, but make sure the names of the three collection are correct.
 
 ### Google Cloud Key json file
 
@@ -48,13 +42,7 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = 'path/of/the/json'
 OPENAI_API_KEY = <Your OpenAI API Key>
 ```
 
-## How to run?
-
-### Run without database (a basic web without admin authentication)
-
-Simply run by typing `flask run` in the command line (or `python3 main.py`)
-
-### Run with database
+## How to run this project on your local machine?
 
 1. Create a new file named `config.py` and fill it with your database configuration
    The template is:
@@ -76,3 +64,8 @@ SECRET_KEY = "<Your secret key>"
 1. Open the [request.py](https://github.com/kexincchen/COMP30022-IT-Project/blob/main/request.py)
 2. Replace the audio file with your own
 3. Run `python request.py`
+
+## How to deploy the MongoDB database?
+1. Create a new cluster
+2. Create a new database called "Robot"
+3. Add collections ("API","Command","User")  into the "Robot" database. You do not need to insert any data into the collections, but make sure the names of the three collection are correct.
