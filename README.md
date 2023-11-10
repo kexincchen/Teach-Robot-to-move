@@ -64,3 +64,7 @@ SECRET_KEY = "<Your secret key>"
 1. Open the [request.py](https://github.com/kexincchen/COMP30022-IT-Project/blob/main/request.py)
 2. Replace the audio file with your own
 3. Run `python request.py`
+
+## Demo
+[![image.png](https://github.com/kexincchen/COMP30022-IT-Project/assets/108605930/b7c22e44-0107-43af-870b-fd8e4b47cabf)](https://drive.google.com/file/d/1me6QFhKTnFgd5tDm5nPJpA5DsHw2-Vmw)https://drive.google.com/file/d/1me6QFhKTnFgd5tDm5nPJpA5DsHw2-Vmw)
+
